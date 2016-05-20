@@ -26,6 +26,7 @@ namespace Risk
             InitializeComponent();
         }
 
+        //public variables
         Territory[] territories;
         Player[] players;
         Player currentPlayer;
@@ -35,7 +36,8 @@ namespace Risk
 
         bool started;
 
-        private void Form1_Load(object sender, EventArgs e)     //essentially the main method, avoid how much you put in
+        //initial instantiation of the public variables
+        private void Form1_Load(object sender, EventArgs e)
         {
             territories = new Territory[0];
             players = new Player[0];
@@ -45,59 +47,39 @@ namespace Risk
             started = false;
         }
 
-        public bool AllOwned()
-        {
-            for (int i = 0; i < territories.Length; i++)
-            {
-                if (territories[i].GetOwner() == null)
-                    return false;
-            }
-            return true;
-        }
-
+        //start button
         private void button3_Click(object sender, EventArgs e)
         {
+            if(!started)
+            {
+                started = true;
+                tb.Text += "Starting the game..." + Environment.NewLine;
 
-            started = true;
-            tb.Text += "Starting the game..." + Environment.NewLine;
-
-            Territory brah = new Territory(0, null, new int[] { 1 });
-            Territory bruh = new Territory(1, null, new int[] { 0, 2, 4 });
-            Territory bro = new Territory(2, null, new int[] { 1, 3, 4 });
-            Territory broski = new Territory(3, null, new int[] { 2, 4, 5 });
-            Territory bruda = new Territory(4, null, new int[] { 1, 2, 5 });
-            Territory bretheren = new Territory(5, null, new int[] { 3, 4 });
+                Territory brah = new Territory(0, null, new int[] { 1 });
+                Territory bruh = new Territory(1, null, new int[] { 0, 2, 4 });
+                Territory bro = new Territory(2, null, new int[] { 1, 3, 4 });
+                Territory broski = new Territory(3, null, new int[] { 2, 4, 5 });
+                Territory bruda = new Territory(4, null, new int[] { 1, 2, 5 });
+                Territory bretheren = new Territory(5, null, new int[] { 3, 4 });
                 territories = new Territory[] { brah, bruh, bro, broski, bruda, bretheren };
 
-            Player player1 = new Player("Parker", Color.Red, tb);
-            Player player2 = new Player("Billy", Color.Blue, tb);
-            Player player3 = new Player("Henry", Color.Green, tb);
+                Player player1 = new Player("Parker", Color.Red, tb);
+                Player player2 = new Player("Billy", Color.Blue, tb);
+                Player player3 = new Player("Henry", Color.Green, tb);
                 players = new Player[] { player1, player2, player3 };
 
-            //Picking
-            currentPlayer = players[playerIndex];
-            currentPlayer.Pick();
+                //Picking
+                currentPlayer = players[playerIndex];
+                currentPlayer.Pick();
 
-            //Drafting
+                //Drafting
 
             
+
+            }
         }
 
-        private void btn0_Click(object sender, EventArgs e)
-        {
-            DoButtonStuff(0, btn0);
-        }
-
-        private void btn1_Click(object sender, EventArgs e)
-        {
-            DoButtonStuff(1, btn1);
-        }
-
-        private void btn2_Click(object sender, EventArgs e)
-        {
-            DoButtonStuff(2, btn2);
-        }
-
+        //clicked on territory
         public void DoButtonStuff(int btnNum, Button btn)
         {
 
@@ -139,6 +121,41 @@ namespace Risk
 
         }
 
+        public bool AllOwned()
+        {
+            for (int i = 0; i < territories.Length; i++)
+            {
+                if (territories[i].GetOwner() == null)
+                    return false;
+            }
+            return true;
+        }
+
+
+
+
+
+
+
+
+
+
+        //btn event handlers, not important
+        private void btn0_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(0, btn0);
+        }
+
+        private void btn1_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(1, btn1);
+        }
+
+        private void btn2_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(2, btn2);
+        }
+
         private void btn3_Click(object sender, EventArgs e)
         {
             DoButtonStuff(3, btn3);
@@ -154,124 +171,5 @@ namespace Risk
             DoButtonStuff(5, btn5);
         }
 
-
-    }
-
-    public class Territory
-    {
-        //String name;
-        private Button btn;
-        private int iDnum;
-        private Player owner;
-        private int[] neighbors;    //I may want to make it Territory[] rather than by iDnum
-        private int troopNum;
-
-        //public Territory() { }
-
-        public Territory( /*Button btn, */ int iDnum, Player owner, int[] neighbors)
-        {
-            //this.btn = btn;   //not really needed
-            this.iDnum = iDnum;
-            this.owner = owner;
-            this.neighbors = neighbors;
-            this.troopNum = 0;
-        }
-
-        public void ChangeOwner(Player newOwner)
-        {
-            this.owner = newOwner;
-        }
-
-        public void AddTroops(int additionalTroops)
-        {
-            this.troopNum = additionalTroops;
-        }
-
-        public void SetNeighbors(int[] enteredNeighbors)
-        {
-            this.neighbors = enteredNeighbors;
-        }
-
-        public Player GetOwner() { return owner; }
-        public int GetTroopNum() { return troopNum; }
-
-    }
-
-    public class Player
-    {
-        private ArrayList ownedTerrs;
-        private String name;
-        private int troopNum;
-
-        private String status;
-        Color color;
-
-        private TextBox tb;
-
-        public Player() { }
-
-        public Player(String name, Color color, TextBox tb)
-        {
-            this.name = name;
-            this.color = color;
-            this.ownedTerrs = new ArrayList();
-            this.status = "idle";
-            this.tb = tb;
-        }
-
-        public void Pick()
-        {
-            status = "picking";
-            tb.Text += name + " is picking a territory." + Environment.NewLine;
-        }
-
-        public void Draft()///Work in progress
-        {
-            int draftTroopNum = (int)(GetTroopTotal() / 3);
-            if (draftTroopNum < 3)
-                draftTroopNum = 3;
-
-            //for | PlaceTroop()
-
-        }
-
-        public void PlaceTroop()///Work in progress
-        {
-
-        }
-
-        public void AddTerr(Territory newTerr)
-        {
-            ownedTerrs.Add(newTerr);
-        }
-
-        public void ChangeStatus(String newStatus) 
-        { 
-            this.status = newStatus;
-        }
-
-        public int GetTroopTotal()
-        {
-            int output = 0;
-            foreach(Territory terr in ownedTerrs)
-            {
-                output += terr.GetTroopNum();
-            }
-            return output;
-        }
-
-        public String GetStatus() { return status; }
-        public Color GetColor() { return color; }
-    }
-
-    public class Game
-    {
-        private Territory[] territories;
-        private Player[] players;
-
-        public void CreateTerrs()
-        {
-
-        }
     }
 }
