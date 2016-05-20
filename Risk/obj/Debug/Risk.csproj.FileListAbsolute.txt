@@ -1,0 +1,9 @@
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Risk\Risk\bin\Debug\Risk.exe.config
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Risk\Risk\bin\Debug\Risk.exe
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Risk\Risk\bin\Debug\Risk.pdb
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Risk\Risk\obj\Debug\Risk.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Risk\Risk\obj\Debug\Risk.Form1.resources
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Risk\Risk\obj\Debug\Risk.Properties.Resources.resources
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Risk\Risk\obj\Debug\Risk.csproj.GenerateResource.Cache
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Risk\Risk\obj\Debug\Risk.exe
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Risk\Risk\obj\Debug\Risk.pdb
