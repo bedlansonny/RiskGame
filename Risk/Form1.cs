@@ -2,8 +2,11 @@
  * Risk Project
  * Started: May 11, 2016
  * 
+ * Ctrl + F "///" to find Work in Progress
+ * Suggestion: create array of Buttons
+ * 
  * Next Phase: Attacking
- *      Ctrl + F "///" to find Work in Progress
+ * 
  */
 using System;
 using System.Collections.Generic;
@@ -55,12 +58,12 @@ namespace Risk
                 started = true;
                 tb.Text += "Starting the game..." + Environment.NewLine;
 
-                Territory brah = new Territory(0, null, new int[] { 1 });
-                Territory bruh = new Territory(1, null, new int[] { 0, 2, 4 });
-                Territory bro = new Territory(2, null, new int[] { 1, 3, 4 });
-                Territory broski = new Territory(3, null, new int[] { 2, 4, 5 });
-                Territory bruda = new Territory(4, null, new int[] { 1, 2, 5 });
-                Territory bretheren = new Territory(5, null, new int[] { 3, 4 });
+                Territory brah = new Territory(btn0, 0, null, new int[] { 1 });
+                Territory bruh = new Territory(btn1, 1, null, new int[] { 0, 2, 4 });
+                Territory bro = new Territory(btn2, 2, null, new int[] { 1, 3, 4 });
+                Territory broski = new Territory(btn3, 3, null, new int[] { 2, 4, 5 });
+                Territory bruda = new Territory(btn4, 4, null, new int[] { 1, 2, 5 });
+                Territory bretheren = new Territory(btn5, 5, null, new int[] { 3, 4 });
                 territories = new Territory[] { brah, bruh, bro, broski, bruda, bretheren };
 
                 Player player1 = new Player("Parker", Color.Red, tb);
@@ -68,18 +71,20 @@ namespace Risk
                 Player player3 = new Player("Henry", Color.Green, tb);
                 players = new Player[] { player1, player2, player3 };
 
-                //Picking (all players, in a circle)
                 currentPlayer = players[playerIndex];
                 currentPlayer.Pick();
 
             }
         }
 
-        private void btnBeginTurn_Click(object sender, EventArgs e)
+        private void btnStopAttacking_Click(object sender, EventArgs e)
         {
-            playerIndex = 0;
-            currentPlayer = players[playerIndex];
-            currentPlayer.Draft();
+            if (currentPlayer.GetStatus().Equals("choosing attacker") ||
+               currentPlayer.GetStatus().Equals("choosing defender"))
+            {
+                currentPlayer.SetStatus("idle");
+                currentPlayer.Fortify();
+            }
         }
 
         //clicked on territory
@@ -99,7 +104,7 @@ namespace Risk
                         currentPlayer.AddTerr(terr);
                         btn.BackColor = currentPlayer.GetColor();
                         btn.Text = "" + terr.GetTroopNum();
-                        currentPlayer.ChangeStatus("idle");
+                        currentPlayer.SetStatus("idle");
 
                         if (AllOwned())
                         {
@@ -120,7 +125,7 @@ namespace Risk
                         }
                     }
                 }
-                else if (currentPlayer.GetStatus().Equals("drafting"))
+                else if (currentPlayer.GetStatus().Equals("drafting") && terr.GetOwner().Equals(currentPlayer))
                 {
                     currentPlayer.TakeDraftTroop(1);
                     terr.AddTroops(1);
@@ -128,11 +133,39 @@ namespace Risk
 
                     if (currentPlayer.GetDraftTroopNum() == 0)
                     {
-                        currentPlayer.ChangeStatus("idle");
+                        currentPlayer.SetStatus("idle");
 
-                        tb.Text += "Attacking phase." + Environment.NewLine;    ///
+                        tb.Text += "Attacking phase." + Environment.NewLine;
+
+                        currentPlayer.AttackSelect();
                     }
+                }
+                else if ((currentPlayer.GetStatus().Equals("choosing attacker") || 
+                          currentPlayer.GetStatus().Equals("choosing defender")) &&
+                          terr.GetOwner().Equals(currentPlayer))
+                {
+                    if (terr.GetTroopNum() < 2)
+                        tb.Text += "Insufficient troops to attack from there." + Environment.NewLine;
+                    else
+                    {
+                        currentPlayer.SetAttacker(terr);
+                        currentPlayer.SetStatus("choosing defender");
+                    }
+                }
+                else if (currentPlayer.GetStatus().Equals("choosing defender") && !terr.GetOwner().Equals(currentPlayer))
+                {
 
+                    if(currentPlayer.GetAttacker().IsNeighbor(terr))
+                    {
+                        currentPlayer.SetDefender(terr);
+                        currentPlayer.Attack();
+                    }
+                    else
+                    {
+                        //////attacker.button.color = initialcolor
+                        currentPlayer.GetAttacker().GetBtn().BackColor = currentPlayer.GetColor();
+                        currentPlayer.SetStatus("choosing attacker");
+                    }
 
                 }
             }
@@ -188,6 +221,8 @@ namespace Risk
         {
             DoButtonStuff(5, btn5);
         }
+
+
 
     }
 }

@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Risk
 {
     public class Territory
     {
         //String name;
-        //private Button btn;       //not really needed
+        private Button btn;
         private int iDnum;
         private Player owner;
         private int[] neighbors;    //I may want to make it Territory[] rather than by iDnum
@@ -17,9 +18,9 @@ namespace Risk
 
         //public Territory() { }
 
-        public Territory( /*Button btn, */ int iDnum, Player owner, int[] neighbors)
+        public Territory(Button btn, int iDnum, Player owner, int[] neighbors)
         {
-            //this.btn = btn;   //not really needed
+            this.btn = btn;
             this.iDnum = iDnum;
             this.owner = owner;
             this.neighbors = neighbors;
@@ -41,8 +42,14 @@ namespace Risk
             this.neighbors = enteredNeighbors;
         }
 
+        public bool IsNeighbor(Territory otherTerr)
+        {
+            return neighbors.Contains(otherTerr.GetiDNum());
+        }
+
         public Player GetOwner() { return owner; }
         public int GetTroopNum() { return troopNum; }
-
+        public int GetiDNum() { return iDnum; }
+        public Button GetBtn() { return btn; }
     }
 }

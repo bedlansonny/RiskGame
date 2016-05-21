@@ -36,6 +36,8 @@
             this.btn4 = new System.Windows.Forms.Button();
             this.btn5 = new System.Windows.Forms.Button();
             this.btn3 = new System.Windows.Forms.Button();
+            this.btnStopAttacking = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn0
@@ -117,11 +119,33 @@
             this.btn3.UseVisualStyleBackColor = true;
             this.btn3.Click += new System.EventHandler(this.btn3_Click);
             // 
+            // btnStopAttacking
+            // 
+            this.btnStopAttacking.Location = new System.Drawing.Point(248, 275);
+            this.btnStopAttacking.Name = "btnStopAttacking";
+            this.btnStopAttacking.Size = new System.Drawing.Size(126, 48);
+            this.btnStopAttacking.TabIndex = 8;
+            this.btnStopAttacking.Text = "Stop Attacking";
+            this.btnStopAttacking.UseVisualStyleBackColor = true;
+            this.btnStopAttacking.Click += new System.EventHandler(this.btnStopAttacking_Click);
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.button1.Location = new System.Drawing.Point(399, 275);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(126, 48);
+            this.button1.TabIndex = 9;
+            this.button1.Text = "Useless button";
+            this.button1.UseVisualStyleBackColor = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(772, 358);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnStopAttacking);
             this.Controls.Add(this.btn3);
             this.Controls.Add(this.btn5);
             this.Controls.Add(this.btn4);
@@ -148,6 +172,8 @@
         private System.Windows.Forms.Button btn4;
         private System.Windows.Forms.Button btn5;
         private System.Windows.Forms.Button btn3;
+        private System.Windows.Forms.Button btnStopAttacking;
+        private System.Windows.Forms.Button button1;
     }
 }
 

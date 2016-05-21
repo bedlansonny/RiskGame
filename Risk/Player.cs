@@ -14,11 +14,11 @@ namespace Risk
         private ArrayList ownedTerrs;
         private String name;
         private int draftTroopNum;
-
         private String status;
         Color color;
-
         private TextBox tb;
+        private Territory attacker;
+        private Territory defender;
 
         public Player() { }
 
@@ -48,6 +48,24 @@ namespace Risk
 
         }
 
+        public void AttackSelect()  ///
+        {
+            status = "choosing attacker";
+            tb.Text += name + " is now attacking." + Environment.NewLine;
+        }
+
+        public void Attack()    ///uses state variables attacker and defender
+        {
+            tb.Text += name + "'s Terr " + attacker.GetiDNum() + " is attacking " + defender.GetOwner().GetName() + "'s Terr " + defender.GetiDNum() + "." + Environment.NewLine;
+
+        }
+
+        public void Fortify()   ///After I finish attack
+        {
+            status = "fortifying";
+            tb.Text += name + " is now fortifying." + Environment.NewLine;
+        }
+
         public void TakeDraftTroop(int amt)
         {
             draftTroopNum -= amt;
@@ -58,9 +76,9 @@ namespace Risk
             ownedTerrs.Add(newTerr);
         }
 
-        public void ChangeStatus(String newStatus)
+        public void RemoteTerr(Territory remTerr)
         {
-            this.status = newStatus;
+            ownedTerrs.Remove(remTerr);
         }
 
         public int GetTroopTotal()
@@ -73,9 +91,22 @@ namespace Risk
             return output;
         }
 
+        public void SetStatus(String newStatus) { this.status = newStatus; }
+        public void SetAttacker(Territory attacker)
+        {
+            if(this.attacker != null)
+                this.attacker.GetBtn().BackColor = color;
+            this.attacker = attacker;
+            this.attacker.GetBtn().BackColor = Color.White;
+            
+        }
+        public void SetDefender(Territory defender) { this.defender = defender; }
+
         public String GetStatus() { return status; }
         public Color GetColor() { return color; }
         public int GetDraftTroopNum() { return draftTroopNum; }
         public String GetName() { return name; }
+        public Territory GetAttacker() { return attacker; }
+        public Territory GetDefender() { return defender; }
     }
 }
