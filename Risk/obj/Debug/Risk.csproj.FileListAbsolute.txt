@@ -7,3 +7,6 @@ C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Risk\Risk\obj\Debug
 C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Risk\Risk\obj\Debug\Risk.csproj.GenerateResource.Cache
 C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Risk\Risk\obj\Debug\Risk.exe
 C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Risk\Risk\obj\Debug\Risk.pdb
+C:\Users\Sonny\Desktop\RiskGame\Risk\bin\Debug\Risk.exe.config
+C:\Users\Sonny\Desktop\RiskGame\Risk\obj\Debug\Risk.exe
+C:\Users\Sonny\Desktop\RiskGame\Risk\obj\Debug\Risk.pdb
