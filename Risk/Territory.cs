@@ -33,7 +33,7 @@ namespace Risk
 
         public void AddTroops(int additionalTroops)
         {
-            this.troopNum = additionalTroops;
+            this.troopNum += additionalTroops;
         }
 
         public void SetNeighbors(int[] enteredNeighbors)

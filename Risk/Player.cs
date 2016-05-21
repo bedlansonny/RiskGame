@@ -13,7 +13,7 @@ namespace Risk
     {
         private ArrayList ownedTerrs;
         private String name;
-        private int troopNum;
+        private int draftTroopNum;
 
         private String status;
         Color color;
@@ -37,19 +37,20 @@ namespace Risk
             tb.Text += name + " is picking a territory." + Environment.NewLine;
         }
 
-        public void Draft()///Work in progress
+        public void Draft()
         {
-            int draftTroopNum = (int)(GetTroopTotal() / 3);
+            draftTroopNum = (int)(GetTroopTotal() / 3);         ///you'll have to incorporate region ownership bonuses
             if (draftTroopNum < 3)
                 draftTroopNum = 3;
 
-            //for | PlaceTroop()
+            status = "drafting";
+            tb.Text += name + " is drafting his troops." + Environment.NewLine;
 
         }
 
-        public void PlaceTroop()///Work in progress
+        public void TakeDraftTroop(int amt)
         {
-
+            draftTroopNum -= amt;
         }
 
         public void AddTerr(Territory newTerr)
@@ -74,5 +75,7 @@ namespace Risk
 
         public String GetStatus() { return status; }
         public Color GetColor() { return color; }
+        public int GetDraftTroopNum() { return draftTroopNum; }
+        public String GetName() { return name; }
     }
 }

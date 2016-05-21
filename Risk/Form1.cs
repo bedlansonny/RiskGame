@@ -2,7 +2,7 @@
  * Risk Project
  * Started: May 11, 2016
  * 
- * Next Phase: Drafting
+ * Next Phase: Attacking
  *      Ctrl + F "///" to find Work in Progress
  */
 using System;
@@ -48,7 +48,7 @@ namespace Risk
         }
 
         //start button
-        private void button3_Click(object sender, EventArgs e)
+        private void btnStart_Click(object sender, EventArgs e)
         {
             if(!started)
             {
@@ -68,15 +68,18 @@ namespace Risk
                 Player player3 = new Player("Henry", Color.Green, tb);
                 players = new Player[] { player1, player2, player3 };
 
-                //Picking
+                //Picking (all players, in a circle)
                 currentPlayer = players[playerIndex];
                 currentPlayer.Pick();
 
-                //Drafting
-
-            
-
             }
+        }
+
+        private void btnBeginTurn_Click(object sender, EventArgs e)
+        {
+            playerIndex = 0;
+            currentPlayer = players[playerIndex];
+            currentPlayer.Draft();
         }
 
         //clicked on territory
@@ -100,7 +103,10 @@ namespace Risk
 
                         if (AllOwned())
                         {
-                            tb.Text += "Next phase." + Environment.NewLine;
+                            tb.Text += "Drafting phase." + Environment.NewLine;
+                            playerIndex = 0;
+                            currentPlayer = players[playerIndex];
+                            currentPlayer.Draft();
                         }
                         else
                         {
@@ -112,10 +118,22 @@ namespace Risk
                             currentPlayer = players[playerIndex];
                             currentPlayer.Pick();
                         }
-
-
-
                     }
+                }
+                else if (currentPlayer.GetStatus().Equals("drafting"))
+                {
+                    currentPlayer.TakeDraftTroop(1);
+                    terr.AddTroops(1);
+                    btn.Text = "" + terr.GetTroopNum();
+
+                    if (currentPlayer.GetDraftTroopNum() == 0)
+                    {
+                        currentPlayer.ChangeStatus("idle");
+
+                        tb.Text += "Attacking phase." + Environment.NewLine;    ///
+                    }
+
+
                 }
             }
 
