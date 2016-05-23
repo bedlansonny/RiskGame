@@ -8,8 +8,8 @@ namespace Risk
 {
     public class Die
     {
-        Random rnd;
-        int value;
+        static Random rnd;
+        private int value;
         
         public Die()
         {
@@ -35,6 +35,11 @@ namespace Risk
         public void SetValue(int newVal)
         {
             value = newVal;
+        }
+
+        public override string ToString()
+        {
+            return "" + value;
         }
     }
 }

@@ -10,3 +10,12 @@ C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Risk\Risk\obj\Debug
 C:\Users\Sonny\Desktop\RiskGame\Risk\bin\Debug\Risk.exe.config
 C:\Users\Sonny\Desktop\RiskGame\Risk\obj\Debug\Risk.exe
 C:\Users\Sonny\Desktop\RiskGame\Risk\obj\Debug\Risk.pdb
+C:\Users\150106\Desktop\RiskGame\Risk\bin\Debug\Risk.exe.config
+C:\Users\150106\Desktop\RiskGame\Risk\obj\Debug\Risk.exe
+C:\Users\150106\Desktop\RiskGame\Risk\obj\Debug\Risk.pdb
+C:\Users\150106\Desktop\RiskGame\Risk\bin\Debug\Risk.exe
+C:\Users\150106\Desktop\RiskGame\Risk\bin\Debug\Risk.pdb
+C:\Users\150106\Desktop\RiskGame\Risk\obj\Debug\Risk.csprojResolveAssemblyReference.cache
+C:\Users\150106\Desktop\RiskGame\Risk\obj\Debug\Risk.Form1.resources
+C:\Users\150106\Desktop\RiskGame\Risk\obj\Debug\Risk.Properties.Resources.resources
+C:\Users\150106\Desktop\RiskGame\Risk\obj\Debug\Risk.csproj.GenerateResource.Cache

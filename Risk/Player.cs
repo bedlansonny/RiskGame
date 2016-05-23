@@ -88,7 +88,7 @@ namespace Risk
                     sorted = true;
                     for (int q = 0; q < attacker.GetDice().Length - p; q++)
                     {
-                        if (attacker.GetDice()[q].GetValue() > attacker.GetDice()[q + 1].GetValue())
+                        if (attacker.GetDice()[q].GetValue() < attacker.GetDice()[q + 1].GetValue())
                         {
                             int temp = attacker.GetDice()[q].GetValue();
                             attacker.GetDice()[q].SetValue(attacker.GetDice()[q + 1].GetValue());
@@ -106,7 +106,7 @@ namespace Risk
                     sorted = true;
                     for (int q = 0; q < defender.GetDice().Length - p; q++)
                     {
-                        if (defender.GetDice()[q].GetValue() > defender.GetDice()[q + 1].GetValue())
+                        if (defender.GetDice()[q].GetValue() < defender.GetDice()[q + 1].GetValue())
                         {
                             int temp = defender.GetDice()[q].GetValue();
                             defender.GetDice()[q].SetValue(defender.GetDice()[q + 1].GetValue());
@@ -117,6 +117,20 @@ namespace Risk
                     }
                 } while (!sorted);
 
+
+                ///This is a test
+                foreach (Die die in attacker.GetDice())
+                    tb.Text += die + ", ";
+
+                tb.Text += Environment.NewLine;
+
+                foreach (Die die in defender.GetDice())
+                    tb.Text += die + ", ";
+
+                tb.Text += Environment.NewLine;
+
+
+                //////////////////////////////////////From here on out, it gets glitchy
 
                 //compare values alongside each arr until one arr get to the end, taking off troops accordingly
                 int maxLength;
