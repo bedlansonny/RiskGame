@@ -19,6 +19,7 @@ namespace Risk
         private TextBox tb;
         private Territory attacker;
         private Territory defender;
+        int attackedWith;
 
         public Player() { }
 
@@ -48,16 +49,126 @@ namespace Risk
 
         }
 
-        public void AttackSelect()  ///
+        public void AttackSelect()
         {
-            status = "choosing attacker";
+            SetStatus("choosing attacker");
             tb.Text += name + " is now attacking." + Environment.NewLine;
         }
 
-        public void Attack()    ///uses state variables attacker and defender
+        public void Attack()    ///////gonna be extremely difficult equations, lots of mapping out, testing, etc.
         {
+            status = "attacking";
             tb.Text += name + "'s Terr " + attacker.GetiDNum() + " is attacking " + defender.GetOwner().GetName() + "'s Terr " + defender.GetiDNum() + "." + Environment.NewLine;
 
+            while(attacker.GetTroopNum() > 1 && defender.GetTroopNum() > 0)
+            {
+                if (attacker.GetTroopNum() == 2)
+                    attacker.SetDiceNum(1);
+                else if (attacker.GetTroopNum() == 3)
+                    attacker.SetDiceNum(2);
+                else if (attacker.GetTroopNum() >= 4)
+                    attacker.SetDiceNum(3);
+
+                if (defender.GetTroopNum() == 1)
+                    defender.SetDiceNum(1);
+                else if (defender.GetTroopNum() >= 2)
+                    defender.SetDiceNum(2);
+
+                foreach (Die die in attacker.GetDice())
+                    die.Roll();
+                foreach (Die die in defender.GetDice())
+                    die.Roll();
+
+                //put highest rolls at arr beginning for both with sorting algorithm
+                //sorting algorithm (attacker)
+                bool sorted;
+                int p = 1;
+                do
+                {
+                    sorted = true;
+                    for (int q = 0; q < attacker.GetDice().Length - p; q++)
+                    {
+                        if (attacker.GetDice()[q].GetValue() > attacker.GetDice()[q + 1].GetValue())
+                        {
+                            int temp = attacker.GetDice()[q].GetValue();
+                            attacker.GetDice()[q].SetValue(attacker.GetDice()[q + 1].GetValue());
+                            attacker.GetDice()[q + 1].SetValue(temp);
+                            sorted = false;
+                        }
+                        p++;
+                    }
+                } while (!sorted);
+
+                //sorting algorithm (defender)
+                p = 1;
+                do
+                {
+                    sorted = true;
+                    for (int q = 0; q < defender.GetDice().Length - p; q++)
+                    {
+                        if (defender.GetDice()[q].GetValue() > defender.GetDice()[q + 1].GetValue())
+                        {
+                            int temp = defender.GetDice()[q].GetValue();
+                            defender.GetDice()[q].SetValue(defender.GetDice()[q + 1].GetValue());
+                            defender.GetDice()[q + 1].SetValue(temp);
+                            sorted = false;
+                        }
+                        p++;
+                    }
+                } while (!sorted);
+
+
+                //compare values alongside each arr until one arr get to the end, taking off troops accordingly
+                int maxLength;
+
+                if (attacker.GetDice().Length < defender.GetDice().Length)
+                    maxLength = attacker.GetDice().Length;
+                else
+                    maxLength = defender.GetDice().Length;
+
+                for (int i = 0; i < maxLength; i++)
+                {
+                    if (defender.GetDice()[i].GetValue() < attacker.GetDice()[i].GetValue())
+                        defender.SubtractTroops(1);
+                    else
+                        attacker.SubtractTroops(1);
+                }
+
+            }
+
+            attacker.GetBtn().BackColor = attacker.GetOwner().GetColor();
+
+            if(defender.GetTroopNum() < 1)
+            {
+                //move all troops but 1 from attacker to defender
+                defender.ChangeOwner(attacker.GetOwner());
+                attacker.GetOwner().AddTerr(defender);
+                defender.GetBtn().BackColor = attacker.GetOwner().GetColor();
+
+                int transferAmt = attacker.GetTroopNum() - 1;
+                attacker.SubtractTroops(transferAmt);
+                defender.AddTroops(transferAmt);
+
+                defender.GetBtn().Text = "" + defender.GetTroopNum();
+                attacker.GetBtn().Text = "" + defender.GetTroopNum();
+
+                RelocateTroops();
+
+            }
+
+            //set attacker and defender dice to null
+            attacker.SetDiceNum(0);
+            defender.SetDiceNum(0);
+
+            //To be put after finishing relocating troops:  AttackSelect();
+        }
+
+        //let player move troops back to attacker as a option
+        //except amount last attacked with
+        public void RelocateTroops()        ///It'd make it more convenient if they blinked while this happened
+        {
+            status = "relocating troops";
+            attackedWith = attacker.GetDice().Length;
         }
 
         public void Fortify()   ///After I finish attack
@@ -97,7 +208,8 @@ namespace Risk
             if(this.attacker != null)
                 this.attacker.GetBtn().BackColor = color;
             this.attacker = attacker;
-            this.attacker.GetBtn().BackColor = Color.White;
+            if(this.attacker != null)
+                this.attacker.GetBtn().BackColor = Color.White;
             
         }
         public void SetDefender(Territory defender) { this.defender = defender; }
@@ -108,5 +220,6 @@ namespace Risk
         public String GetName() { return name; }
         public Territory GetAttacker() { return attacker; }
         public Territory GetDefender() { return defender; }
+        public int GetAttackedWith() { return attackedWith; }
     }
 }

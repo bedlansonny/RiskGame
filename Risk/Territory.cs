@@ -16,11 +16,15 @@ namespace Risk
         private int[] neighbors;    //I may want to make it Territory[] rather than by iDnum
         private int troopNum;
 
+        public static Button[] btns;    //not traditional, experimental to shorten constructor parameters
+
+        Die[] dice;
+
         //public Territory() { }
 
-        public Territory(Button btn, int iDnum, Player owner, int[] neighbors)
+        public Territory(int iDnum, Player owner, int[] neighbors)
         {
-            this.btn = btn;
+            this.btn = btns[iDnum];
             this.iDnum = iDnum;
             this.owner = owner;
             this.neighbors = neighbors;
@@ -35,6 +39,13 @@ namespace Risk
         public void AddTroops(int additionalTroops)
         {
             this.troopNum += additionalTroops;
+            btn.Text = "" + this.troopNum;
+        }
+
+        public void SubtractTroops(int subractedTroops)
+        {
+            this.troopNum -= subractedTroops;
+            btn.Text = "" + this.troopNum;
         }
 
         public void SetNeighbors(int[] enteredNeighbors)
@@ -47,9 +58,17 @@ namespace Risk
             return neighbors.Contains(otherTerr.GetiDNum());
         }
 
+        public void SetDiceNum(int diceNum)
+        {
+            dice = new Die[diceNum];
+            for (int i = 0; i < dice.Length; i++)
+                dice[i] = new Die();
+        }
+
         public Player GetOwner() { return owner; }
         public int GetTroopNum() { return troopNum; }
         public int GetiDNum() { return iDnum; }
         public Button GetBtn() { return btn; }
+        public Die[] GetDice() { return dice; }
     }
 }

@@ -37,7 +37,9 @@
             this.btn5 = new System.Windows.Forms.Button();
             this.btn3 = new System.Windows.Forms.Button();
             this.btnStopAttacking = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnTest = new System.Windows.Forms.Button();
+            this.btnTest0 = new System.Windows.Forms.Button();
+            this.btnTest1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn0
@@ -129,22 +131,46 @@
             this.btnStopAttacking.UseVisualStyleBackColor = true;
             this.btnStopAttacking.Click += new System.EventHandler(this.btnStopAttacking_Click);
             // 
-            // button1
+            // btnTest
             // 
-            this.button1.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.button1.Location = new System.Drawing.Point(399, 275);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(126, 48);
-            this.button1.TabIndex = 9;
-            this.button1.Text = "Useless button";
-            this.button1.UseVisualStyleBackColor = false;
+            this.btnTest.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.btnTest.Location = new System.Drawing.Point(187, 392);
+            this.btnTest.Name = "btnTest";
+            this.btnTest.Size = new System.Drawing.Size(126, 48);
+            this.btnTest.TabIndex = 10;
+            this.btnTest.Text = "Test";
+            this.btnTest.UseVisualStyleBackColor = false;
+            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
+            // 
+            // btnTest0
+            // 
+            this.btnTest0.Location = new System.Drawing.Point(319, 367);
+            this.btnTest0.Name = "btnTest0";
+            this.btnTest0.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.btnTest0.Size = new System.Drawing.Size(126, 99);
+            this.btnTest0.TabIndex = 11;
+            this.btnTest0.Text = "TEST0";
+            this.btnTest0.UseVisualStyleBackColor = true;
+            this.btnTest0.Click += new System.EventHandler(this.btnTest0_Click);
+            // 
+            // btnTest1
+            // 
+            this.btnTest1.Location = new System.Drawing.Point(451, 367);
+            this.btnTest1.Name = "btnTest1";
+            this.btnTest1.Size = new System.Drawing.Size(126, 99);
+            this.btnTest1.TabIndex = 12;
+            this.btnTest1.Text = "TEST1";
+            this.btnTest1.UseVisualStyleBackColor = true;
+            this.btnTest1.Click += new System.EventHandler(this.btnTest1_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(772, 358);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(966, 497);
+            this.Controls.Add(this.btnTest1);
+            this.Controls.Add(this.btnTest0);
+            this.Controls.Add(this.btnTest);
             this.Controls.Add(this.btnStopAttacking);
             this.Controls.Add(this.btn3);
             this.Controls.Add(this.btn5);
@@ -173,7 +199,9 @@
         private System.Windows.Forms.Button btn5;
         private System.Windows.Forms.Button btn3;
         private System.Windows.Forms.Button btnStopAttacking;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnTest;
+        private System.Windows.Forms.Button btnTest0;
+        private System.Windows.Forms.Button btnTest1;
     }
 }
 

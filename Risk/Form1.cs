@@ -3,7 +3,6 @@
  * Started: May 11, 2016
  * 
  * Ctrl + F "///" to find Work in Progress
- * Suggestion: create array of Buttons
  * 
  * Next Phase: Attacking
  * 
@@ -33,11 +32,11 @@ namespace Risk
         Territory[] territories;
         Player[] players;
         Player currentPlayer;
-
         int playerIndex;
         TextBox tb;
-
         bool started;
+
+        Button[] btns;
 
         //initial instantiation of the public variables
         private void Form1_Load(object sender, EventArgs e)
@@ -48,6 +47,7 @@ namespace Risk
             playerIndex = 0;
             tb = textBox1;
             started = false;
+
         }
 
         //start button
@@ -58,12 +58,15 @@ namespace Risk
                 started = true;
                 tb.Text += "Starting the game..." + Environment.NewLine;
 
-                Territory brah = new Territory(btn0, 0, null, new int[] { 1 });
-                Territory bruh = new Territory(btn1, 1, null, new int[] { 0, 2, 4 });
-                Territory bro = new Territory(btn2, 2, null, new int[] { 1, 3, 4 });
-                Territory broski = new Territory(btn3, 3, null, new int[] { 2, 4, 5 });
-                Territory bruda = new Territory(btn4, 4, null, new int[] { 1, 2, 5 });
-                Territory bretheren = new Territory(btn5, 5, null, new int[] { 3, 4 });
+                btns = new Button[] { btn0, btn1, btn2, btn3, btn4, btn5 };     //needs to change based on amt of terr btns
+                Territory.btns = btns;
+
+                Territory brah = new Territory(0, null, new int[] { 1 });
+                Territory bruh = new Territory(1, null, new int[] { 0, 2, 4 });
+                Territory bro = new Territory(2, null, new int[] { 1, 3, 4 });
+                Territory broski = new Territory(3, null, new int[] { 2, 4, 5 });
+                Territory bruda = new Territory(4, null, new int[] { 1, 2, 5 });
+                Territory bretheren = new Territory(5, null, new int[] { 3, 4 });
                 territories = new Territory[] { brah, bruh, bro, broski, bruda, bretheren };
 
                 Player player1 = new Player("Parker", Color.Red, tb);
@@ -87,13 +90,35 @@ namespace Risk
             }
         }
 
+        private void btnTest_Click(object sender, EventArgs e)
+        {
+            started = true;
+
+            btns = new Button[] { btnTest0, btnTest1 };
+            Territory.btns = btns;
+
+            Player p1 = new Player("Joe", Color.DarkViolet, tb);
+            Player p2 = new Player("Bob", Color.DarkTurquoise, tb);
+            players = new Player[] { p1, p2 };
+;
+            Territory test0 = new Territory(0, null, new int[] { 1 });
+            Territory test1 = new Territory(1, null, new int[] { 0 });
+            territories = new Territory[] { test0, test1 };
+
+            currentPlayer = players[playerIndex];
+            currentPlayer.Pick();
+
+
+        }
+
         //clicked on territory
-        public void DoButtonStuff(int btnNum, Button btn)
+        public void DoButtonStuff(int btnNum)
         {
 
             if(started)
             {
                 Territory terr = territories[btnNum];
+                Button btn = btns[btnNum];
 
                 if (currentPlayer.GetStatus().Equals("picking"))
                 {
@@ -146,6 +171,13 @@ namespace Risk
                 {
                     if (terr.GetTroopNum() < 2)
                         tb.Text += "Insufficient troops to attack from there." + Environment.NewLine;
+                    else if(terr.Equals(currentPlayer.GetAttacker()))
+                    {
+
+                        currentPlayer.GetAttacker().GetBtn().BackColor = currentPlayer.GetColor();
+                        currentPlayer.SetAttacker(null);
+                        currentPlayer.SetStatus("choosing attacker");
+                    }
                     else
                     {
                         currentPlayer.SetAttacker(terr);
@@ -162,11 +194,48 @@ namespace Risk
                     }
                     else
                     {
-                        //////attacker.button.color = initialcolor
+
                         currentPlayer.GetAttacker().GetBtn().BackColor = currentPlayer.GetColor();
+                        currentPlayer.SetAttacker(null);
                         currentPlayer.SetStatus("choosing attacker");
                     }
+                }
+                else if (currentPlayer.GetStatus().Equals("relocating troops")) ///
+                {
+                    if (!terr.Equals(currentPlayer.GetAttacker()) && !terr.Equals(currentPlayer.GetAttacker()))
+                    {
+                        currentPlayer.AttackSelect();
+                    }
+                    else if (terr.Equals(currentPlayer.GetDefender()))
+                    {
+                        if (currentPlayer.GetAttacker().GetTroopNum() == 1)
+                        {
+                            currentPlayer.AttackSelect();
+                            currentPlayer.SetAttacker(terr);
+                            currentPlayer.SetStatus("choosing defender");
+                        }
+                        else
+                        {
+                            currentPlayer.GetAttacker().SubtractTroops(1);
+                            terr.AddTroops(1);
+                            currentPlayer.GetAttacker().GetBtn().Text = "" + currentPlayer.GetAttacker().GetTroopNum();
+                            terr.GetBtn().Text = "" + terr.GetTroopNum();
+                        }
+                    }
+                    else if (terr.Equals(currentPlayer.GetAttacker()))
+                    {
+                        if (currentPlayer.GetDefender().GetTroopNum() == currentPlayer.GetAttackedWith())
+                        {
 
+                        }
+                        else if (currentPlayer.GetDefender().GetTroopNum() > currentPlayer.GetAttackedWith())
+                        {
+                            currentPlayer.GetDefender().SubtractTroops(1);
+                            terr.AddTroops(1);
+                            currentPlayer.GetDefender().GetBtn().Text = "" + currentPlayer.GetDefender().GetTroopNum();
+                            terr.GetBtn().Text = "" + terr.GetTroopNum();
+                        }
+                    }
                 }
             }
 
@@ -189,38 +258,50 @@ namespace Risk
 
 
 
+        private void btnTest0_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(0);
+        }
 
+        private void btnTest1_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(1);
+        }
 
         //btn event handlers, not important
         private void btn0_Click(object sender, EventArgs e)
         {
-            DoButtonStuff(0, btn0);
+            DoButtonStuff(0);
         }
 
         private void btn1_Click(object sender, EventArgs e)
         {
-            DoButtonStuff(1, btn1);
+            DoButtonStuff(1);
         }
 
         private void btn2_Click(object sender, EventArgs e)
         {
-            DoButtonStuff(2, btn2);
+            DoButtonStuff(2);
         }
 
         private void btn3_Click(object sender, EventArgs e)
         {
-            DoButtonStuff(3, btn3);
+            DoButtonStuff(3);
         }
 
         private void btn4_Click(object sender, EventArgs e)
         {
-            DoButtonStuff(4, btn4);
+            DoButtonStuff(4);
         }
 
         private void btn5_Click(object sender, EventArgs e)
         {
-            DoButtonStuff(5, btn5);
+            DoButtonStuff(5);
         }
+
+
+
+
 
 
 
