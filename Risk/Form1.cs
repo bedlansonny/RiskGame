@@ -4,7 +4,14 @@
  * 
  * Ctrl + F "///" to find Work in Progress
  * 
- * Next Phase: Attacking
+ * Future addtions:
+ *      remove players when they are eliminated!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+ *      actually impliment the Game class somehow
+ *      fortifying only if territories are connected
+ *      card system
+ *      ability to increase amount of troops moved in a click
+ *      blinking when transferring troops after attacking
+ *      skip fortifying step if all owned troops only have 1
  * 
  */
 using System;
@@ -48,6 +55,12 @@ namespace Risk
             tb = textBox1;
             started = false;
 
+
+        }
+
+        private void btnClear_Click(object sender, EventArgs e) ///experimental
+        {
+            tb.Text = "";
         }
 
         //start button
@@ -73,6 +86,7 @@ namespace Risk
                 Player player2 = new Player("Billy", Color.Blue, tb);
                 Player player3 = new Player("Henry", Color.Green, tb);
                 players = new Player[] { player1, player2, player3 };
+                Game game = new Game(players);
 
                 currentPlayer = players[playerIndex];
                 currentPlayer.Pick();
@@ -83,10 +97,50 @@ namespace Risk
         private void btnStopAttacking_Click(object sender, EventArgs e)
         {
             if (currentPlayer.GetStatus().Equals("choosing attacker") ||
-               currentPlayer.GetStatus().Equals("choosing defender"))
+                currentPlayer.GetStatus().Equals("choosing defender") ||
+                currentPlayer.GetStatus().Equals("attacking") ||
+                currentPlayer.GetStatus().Equals("relocating troops"))
             {
                 currentPlayer.SetStatus("idle");
                 currentPlayer.Fortify();
+            }
+            else  ///just a test
+            {
+                tb.Text += "ERROR:" + currentPlayer.GetStatus() + Environment.NewLine;
+            }
+        }
+
+        private void btnEndTurn_Click(object sender, EventArgs e)
+        {
+            if (currentPlayer.GetStatus().Equals("fortifying, picking source") ||
+                currentPlayer.GetStatus().Equals("fortifying, picking target") ||
+                currentPlayer.GetStatus().Equals("transferring"))
+            {
+                currentPlayer.SetStatus("idle");
+                if (currentPlayer.GetFortSource() != null)
+                    currentPlayer.GetFortSource().GetBtn().BackColor = currentPlayer.GetColor();
+                if (currentPlayer.GetFortTarget() != null)
+                {
+                    currentPlayer.GetFortTarget().GetBtn().BackColor = currentPlayer.GetColor();
+                    currentPlayer.GetFortTarget().GetBtn().ForeColor = Color.Black;
+                }
+
+                currentPlayer.SetFortSource(null);
+                currentPlayer.SetFortTarget(null);
+
+                if (playerIndex < players.Length - 1)
+                    playerIndex++;
+                else
+                {
+                    playerIndex = 0;
+                }
+                currentPlayer = players[playerIndex];
+                currentPlayer.Draft();
+
+            }
+            else   ///just a test
+            {
+                tb.Text += "ERROR:" + currentPlayer.GetStatus() + Environment.NewLine;
             }
         }
 
@@ -114,6 +168,8 @@ namespace Risk
         //clicked on territory
         public void DoButtonStuff(int btnNum)
         {
+
+            tb.Text += currentPlayer.GetName() + ": " + currentPlayer.GetStatus() + Environment.NewLine;     ///just a test
 
             if(started)
             {
@@ -200,16 +256,17 @@ namespace Risk
                         currentPlayer.SetStatus("choosing attacker");
                     }
                 }
-                else if (currentPlayer.GetStatus().Equals("relocating troops")) ///
+                else if (currentPlayer.GetStatus().Equals("relocating troops")) ///will be tested later**************
                 {
-                    if (!terr.Equals(currentPlayer.GetAttacker()) && !terr.Equals(currentPlayer.GetAttacker()))
+                    if (!terr.Equals(currentPlayer.GetAttacker()) && !terr.Equals(currentPlayer.GetDefender()))
                     {
                         currentPlayer.AttackSelect();
                     }
                     else if (terr.Equals(currentPlayer.GetDefender()))
                     {
-                        if (currentPlayer.GetAttacker().GetTroopNum() == 1)
+                        if (currentPlayer.GetAttacker().GetTroopNum() == 1) ////needs to jump to turning white and whatnot
                         {
+                            tb.Text += "potato" + Environment.NewLine;    ///experimental
                             currentPlayer.AttackSelect();
                             currentPlayer.SetAttacker(terr);
                             currentPlayer.SetStatus("choosing defender");
@@ -235,6 +292,66 @@ namespace Risk
                             currentPlayer.GetDefender().GetBtn().Text = "" + currentPlayer.GetDefender().GetTroopNum();
                             terr.GetBtn().Text = "" + terr.GetTroopNum();
                         }
+                    }
+                }
+                else if (currentPlayer.GetStatus().Equals("fortifying, picking source") && terr.GetOwner().Equals(currentPlayer) && terr.GetTroopNum() > 1) ///
+                {
+                    if (terr.Equals(currentPlayer.GetFortSource()))
+                    {
+                        currentPlayer.GetFortSource().GetBtn().BackColor = currentPlayer.GetColor();
+                        currentPlayer.SetFortSource(null);
+                        currentPlayer.SetStatus("fortifying, picking source");
+                    }
+                    else
+                    {
+                        currentPlayer.SetFortSource(terr);
+                        currentPlayer.SetStatus("fortifying, picking target");
+                    }
+
+                }
+                else if (currentPlayer.GetStatus().Equals("fortifying, picking target"))
+                {
+                    if (terr.GetOwner().Equals(currentPlayer))
+                    {
+                        currentPlayer.SetFortTarget(terr);
+                        currentPlayer.Transfer();
+                        currentPlayer.GetFortSource().SubtractTroops(1);
+                        currentPlayer.GetFortTarget().AddTroops(1);
+                    }
+                    else
+                    {
+
+                        currentPlayer.GetFortSource().GetBtn().BackColor = currentPlayer.GetColor();
+                        currentPlayer.SetFortSource(null);
+                        currentPlayer.SetStatus("fortifying, picking source");
+                    }
+                }
+                else if (currentPlayer.GetStatus().Equals("transferring"))  ///
+                {
+                    if (!terr.Equals(currentPlayer.GetFortSource()) && !terr.Equals(currentPlayer.GetFortTarget()))
+                    {
+                        currentPlayer.SetStatus("idle");
+                        currentPlayer.GetFortSource().GetBtn().BackColor = currentPlayer.GetColor();
+                        currentPlayer.GetFortTarget().GetBtn().BackColor = currentPlayer.GetColor();
+                        currentPlayer.GetFortTarget().GetBtn().ForeColor = Color.Black;
+                        if (playerIndex < players.Length - 1)
+                            playerIndex++;
+                        else
+                        {
+                            playerIndex = 0;
+                        }
+                        currentPlayer = players[playerIndex];
+                        currentPlayer.Draft();
+                    }
+                    else if (terr.Equals(currentPlayer.GetFortSource()) && currentPlayer.GetFortTarget().GetTroopNum() > 1)
+                    {
+                        terr.AddTroops(1);
+                        currentPlayer.GetFortTarget().SubtractTroops(1);
+                    }
+                    else if (terr.Equals(currentPlayer.GetFortTarget()) && currentPlayer.GetFortSource().GetTroopNum() > 1)
+                    {
+                        terr.AddTroops(1);
+                        currentPlayer.GetFortSource().SubtractTroops(1);
                     }
                 }
             }
@@ -299,11 +416,15 @@ namespace Risk
             DoButtonStuff(5);
         }
 
+    }
 
+    public class Game
+    {
+        public static Player[] players;
 
-
-
-
-
+        public Game(Player[] players2)
+        {
+            players = players2;
+        }
     }
 }

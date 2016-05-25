@@ -19,3 +19,9 @@ C:\Users\150106\Desktop\RiskGame\Risk\obj\Debug\Risk.csprojResolveAssemblyRefere
 C:\Users\150106\Desktop\RiskGame\Risk\obj\Debug\Risk.Form1.resources
 C:\Users\150106\Desktop\RiskGame\Risk\obj\Debug\Risk.Properties.Resources.resources
 C:\Users\150106\Desktop\RiskGame\Risk\obj\Debug\Risk.csproj.GenerateResource.Cache
+C:\Users\Sonny\Desktop\RiskGame\Risk\bin\Debug\Risk.exe
+C:\Users\Sonny\Desktop\RiskGame\Risk\bin\Debug\Risk.pdb
+C:\Users\Sonny\Desktop\RiskGame\Risk\obj\Debug\Risk.csprojResolveAssemblyReference.cache
+C:\Users\Sonny\Desktop\RiskGame\Risk\obj\Debug\Risk.Form1.resources
+C:\Users\Sonny\Desktop\RiskGame\Risk\obj\Debug\Risk.Properties.Resources.resources
+C:\Users\Sonny\Desktop\RiskGame\Risk\obj\Debug\Risk.csproj.GenerateResource.Cache

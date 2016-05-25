@@ -20,6 +20,8 @@ namespace Risk
         private Territory attacker;
         private Territory defender;
         int attackedWith;
+        private Territory fortSource;
+        private Territory fortTarget;
 
         public Player() { }
 
@@ -130,7 +132,6 @@ namespace Risk
                 tb.Text += Environment.NewLine;
 
 
-                //////////////////////////////////////From here on out, it gets glitchy
 
                 //compare values alongside each arr until one arr get to the end, taking off troops accordingly
                 int maxLength;
@@ -154,25 +155,36 @@ namespace Risk
 
             if(defender.GetTroopNum() < 1)
             {
+
                 //move all troops but 1 from attacker to defender
+                Player temp = defender.GetOwner();////////////////////////////
+                defender.GetOwner().RemoveTerr(defender);
                 defender.ChangeOwner(attacker.GetOwner());
-                attacker.GetOwner().AddTerr(defender);
+                defender.GetOwner().AddTerr(defender);
                 defender.GetBtn().BackColor = attacker.GetOwner().GetColor();
 
+                tb.Text += "a: " + attacker.GetTroopNum() + Environment.NewLine + "d: " + defender.GetTroopNum() + Environment.NewLine;///test stuff
                 int transferAmt = attacker.GetTroopNum() - 1;
                 attacker.SubtractTroops(transferAmt);
                 defender.AddTroops(transferAmt);
+                tb.Text += "a: " + attacker.GetTroopNum() + Environment.NewLine + "d: " + defender.GetTroopNum() + Environment.NewLine;///test stuff
+                                                                                                                                       ///
+                if (temp.ownedTerrs.Count == 0) ;
+                    ///////////////////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-                defender.GetBtn().Text = "" + defender.GetTroopNum();
-                attacker.GetBtn().Text = "" + defender.GetTroopNum();
+                RelocateTroops();       ///may be glitchy still
 
-                RelocateTroops();
+                //set attacker and defender dice to null
+                attacker.SetDiceNum(0);
+                defender.SetDiceNum(0);
 
             }
+            else
+            {
+                AttackSelect();
+            }
 
-            //set attacker and defender dice to null
-            attacker.SetDiceNum(0);
-            defender.SetDiceNum(0);
+
 
             //To be put after finishing relocating troops:  AttackSelect();
         }
@@ -187,8 +199,13 @@ namespace Risk
 
         public void Fortify()   ///After I finish attack
         {
-            status = "fortifying";
+            status = "fortifying, picking source";
             tb.Text += name + " is now fortifying." + Environment.NewLine;
+        }
+
+        public void Transfer()
+        {
+            status = "transferring";
         }
 
         public void TakeDraftTroop(int amt)
@@ -201,7 +218,7 @@ namespace Risk
             ownedTerrs.Add(newTerr);
         }
 
-        public void RemoteTerr(Territory remTerr)
+        public void RemoveTerr(Territory remTerr)
         {
             ownedTerrs.Remove(remTerr);
         }
@@ -228,6 +245,29 @@ namespace Risk
         }
         public void SetDefender(Territory defender) { this.defender = defender; }
 
+        public void SetFortSource(Territory source)
+        {
+            if (this.fortSource != null)
+                this.fortSource.GetBtn().BackColor = color;
+            this.fortSource = source;
+            if (this.fortSource != null)
+                this.fortSource.GetBtn().BackColor = Color.White;
+        }
+        public void SetFortTarget(Territory target)
+        {
+            if (this.fortTarget != null)
+            {
+                this.fortTarget.GetBtn().BackColor = color;
+                this.fortTarget.GetBtn().ForeColor = Color.Black;
+            }
+            this.fortTarget = target;
+            if (this.fortTarget != null)
+            {
+                this.fortTarget.GetBtn().BackColor = Color.Black;
+                this.fortTarget.GetBtn().ForeColor = Color.White;
+            }
+        }
+
         public String GetStatus() { return status; }
         public Color GetColor() { return color; }
         public int GetDraftTroopNum() { return draftTroopNum; }
@@ -235,5 +275,7 @@ namespace Risk
         public Territory GetAttacker() { return attacker; }
         public Territory GetDefender() { return defender; }
         public int GetAttackedWith() { return attackedWith; }
+        public Territory GetFortSource() { return fortSource; }
+        public Territory GetFortTarget() { return fortTarget; }
     }
 }

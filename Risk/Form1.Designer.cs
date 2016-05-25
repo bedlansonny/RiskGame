@@ -40,6 +40,8 @@
             this.btnTest = new System.Windows.Forms.Button();
             this.btnTest0 = new System.Windows.Forms.Button();
             this.btnTest1 = new System.Windows.Forms.Button();
+            this.btnEndTurn = new System.Windows.Forms.Button();
+            this.btnClear = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn0
@@ -64,7 +66,7 @@
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(248, 221);
+            this.btnStart.Location = new System.Drawing.Point(219, 194);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(126, 48);
             this.btnStart.TabIndex = 2;
@@ -88,7 +90,7 @@
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(169, 473);
+            this.textBox1.Size = new System.Drawing.Size(169, 428);
             this.textBox1.TabIndex = 4;
             // 
             // btn4
@@ -123,7 +125,7 @@
             // 
             // btnStopAttacking
             // 
-            this.btnStopAttacking.Location = new System.Drawing.Point(248, 275);
+            this.btnStopAttacking.Location = new System.Drawing.Point(219, 248);
             this.btnStopAttacking.Name = "btnStopAttacking";
             this.btnStopAttacking.Size = new System.Drawing.Size(126, 48);
             this.btnStopAttacking.TabIndex = 8;
@@ -133,7 +135,8 @@
             // 
             // btnTest
             // 
-            this.btnTest.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.btnTest.BackColor = System.Drawing.Color.MidnightBlue;
+            this.btnTest.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.btnTest.Location = new System.Drawing.Point(187, 392);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(126, 48);
@@ -163,11 +166,33 @@
             this.btnTest1.UseVisualStyleBackColor = true;
             this.btnTest1.Click += new System.EventHandler(this.btnTest1_Click);
             // 
+            // btnEndTurn
+            // 
+            this.btnEndTurn.Location = new System.Drawing.Point(219, 302);
+            this.btnEndTurn.Name = "btnEndTurn";
+            this.btnEndTurn.Size = new System.Drawing.Size(126, 48);
+            this.btnEndTurn.TabIndex = 13;
+            this.btnEndTurn.Text = "End Turn";
+            this.btnEndTurn.UseVisualStyleBackColor = true;
+            this.btnEndTurn.Click += new System.EventHandler(this.btnEndTurn_Click);
+            // 
+            // btnClear
+            // 
+            this.btnClear.Location = new System.Drawing.Point(12, 446);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(169, 40);
+            this.btnClear.TabIndex = 14;
+            this.btnClear.Text = "CLEAR TXTBOX";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(966, 497);
+            this.Controls.Add(this.btnClear);
+            this.Controls.Add(this.btnEndTurn);
             this.Controls.Add(this.btnTest1);
             this.Controls.Add(this.btnTest0);
             this.Controls.Add(this.btnTest);
@@ -202,6 +227,8 @@
         private System.Windows.Forms.Button btnTest;
         private System.Windows.Forms.Button btnTest0;
         private System.Windows.Forms.Button btnTest1;
+        private System.Windows.Forms.Button btnEndTurn;
+        private System.Windows.Forms.Button btnClear;
     }
 }
 
