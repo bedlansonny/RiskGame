@@ -22,6 +22,7 @@ namespace Risk
         int attackedWith;
         private Territory fortSource;
         private Territory fortTarget;
+        private bool isDead;
 
         public Player() { }
 
@@ -32,6 +33,7 @@ namespace Risk
             this.ownedTerrs = new ArrayList();
             this.status = "idle";
             this.tb = tb;
+            this.isDead = false;
         }
 
         public void Pick()
@@ -42,6 +44,7 @@ namespace Risk
 
         public void Draft()
         {
+
             draftTroopNum = (int)(GetTroopTotal() / 3);         ///you'll have to incorporate region ownership bonuses
             if (draftTroopNum < 3)
                 draftTroopNum = 3;
@@ -57,7 +60,7 @@ namespace Risk
             tb.Text += name + " is now attacking." + Environment.NewLine;
         }
 
-        public void Attack()    ///////gonna be extremely difficult equations, lots of mapping out, testing, etc.
+        public void Attack()    ///gonna be extremely difficult equations, lots of mapping out, testing, etc.
         {
             status = "attacking";
             tb.Text += name + "'s Terr " + attacker.GetiDNum() + " is attacking " + defender.GetOwner().GetName() + "'s Terr " + defender.GetiDNum() + "." + Environment.NewLine;
@@ -169,8 +172,9 @@ namespace Risk
                 defender.AddTroops(transferAmt);
                 tb.Text += "a: " + attacker.GetTroopNum() + Environment.NewLine + "d: " + defender.GetTroopNum() + Environment.NewLine;///test stuff
                                                                                                                                        ///
-                if (temp.ownedTerrs.Count == 0) ;
-                    ///////////////////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                if (temp.ownedTerrs.Count == 0)
+                    temp.SetIsDead(true);
+
 
                 RelocateTroops();       ///may be glitchy still
 
@@ -268,6 +272,8 @@ namespace Risk
             }
         }
 
+        public void SetIsDead(bool asdf) { this.isDead = asdf; }
+
         public String GetStatus() { return status; }
         public Color GetColor() { return color; }
         public int GetDraftTroopNum() { return draftTroopNum; }
@@ -277,5 +283,6 @@ namespace Risk
         public int GetAttackedWith() { return attackedWith; }
         public Territory GetFortSource() { return fortSource; }
         public Territory GetFortTarget() { return fortTarget; }
+        public bool GetIsDead() { return isDead; }
     }
 }

@@ -42,6 +42,7 @@
             this.btnTest1 = new System.Windows.Forms.Button();
             this.btnEndTurn = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
+            this.btnUni = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn0
@@ -186,11 +187,22 @@
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
+            // btnUni
+            // 
+            this.btnUni.Location = new System.Drawing.Point(783, 302);
+            this.btnUni.Name = "btnUni";
+            this.btnUni.Size = new System.Drawing.Size(126, 48);
+            this.btnUni.TabIndex = 15;
+            this.btnUni.Text = "Start Game";
+            this.btnUni.UseVisualStyleBackColor = true;
+            this.btnUni.Click += new System.EventHandler(this.btnUni_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(966, 497);
+            this.Controls.Add(this.btnUni);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnEndTurn);
             this.Controls.Add(this.btnTest1);
@@ -229,6 +241,7 @@
         private System.Windows.Forms.Button btnTest1;
         private System.Windows.Forms.Button btnEndTurn;
         private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.Button btnUni;
     }
 }
 

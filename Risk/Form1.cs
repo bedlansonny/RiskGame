@@ -5,13 +5,14 @@
  * Ctrl + F "///" to find Work in Progress
  * 
  * Future addtions:
- *      remove players when they are eliminated!!!!!!!!!!!!!!!!!!!!!!!!!!!1
- *      actually impliment the Game class somehow
+ *      make the start, attack, fortify, and end turn buttons are the same button
  *      fortifying only if territories are connected
  *      card system
  *      ability to increase amount of troops moved in a click
+            also add the ability to take back troops in drafting
  *      blinking when transferring troops after attacking
  *      skip fortifying step if all owned troops only have 1
+ *      actually impliment the Game class somehow
  * 
  */
 using System;
@@ -29,6 +30,7 @@ namespace Risk
 {
     public partial class Form1 : Form
     {
+
 
         public Form1()
         {
@@ -58,9 +60,125 @@ namespace Risk
 
         }
 
-        private void btnClear_Click(object sender, EventArgs e) ///experimental
+        public void CheckForWinner()
+        {
+            Player winner = null;
+
+            foreach(Player p in players)
+            {
+                if (!p.GetIsDead())
+                {
+                    if (winner == null)
+                        winner = p;
+                    else
+                        return;
+                }
+            }
+
+            MessageBox.Show(winner.GetName() + " won the game!!!!!");
+
+        }
+
+        public void NextPlayer()    ///
+        {
+            if (playerIndex < players.Length - 1)
+                playerIndex++;
+            else
+            {
+                playerIndex = 0;
+            }
+            currentPlayer = players[playerIndex];
+            if (currentPlayer.GetIsDead())
+                NextPlayer();
+            currentPlayer.Draft();
+        }
+
+        private void btnClear_Click(object sender, EventArgs e) ////experimental
         {
             tb.Text = "";
+        }
+
+        private void btnUni_Click(object sender, EventArgs e)
+        {
+            if (btnUni.Text.Equals("Start Game"))
+            {
+                if (!started)
+                {
+                    started = true;
+                    tb.Text += "Starting the game..." + Environment.NewLine;
+
+                    btns = new Button[] { btn0, btn1, btn2, btn3, btn4, btn5 };     //needs to change based on amt of terr btns
+                    Territory.btns = btns;
+
+                    Territory brah = new Territory(0, null, new int[] { 1 });
+                    Territory bruh = new Territory(1, null, new int[] { 0, 2, 4 });
+                    Territory bro = new Territory(2, null, new int[] { 1, 3, 4 });
+                    Territory broski = new Territory(3, null, new int[] { 2, 4, 5 });
+                    Territory bruda = new Territory(4, null, new int[] { 1, 2, 5 });
+                    Territory bretheren = new Territory(5, null, new int[] { 3, 4 });
+                    territories = new Territory[] { brah, bruh, bro, broski, bruda, bretheren };
+
+                    Player player1 = new Player("Parker", Color.Red, tb);
+                    Player player2 = new Player("Billy", Color.Blue, tb);
+                    Player player3 = new Player("Henry", Color.Green, tb);
+                    players = new Player[] { player1, player2, player3 };
+                    Game game = new Game(players);      ///wut
+
+                    currentPlayer = players[playerIndex];
+                    currentPlayer.Pick();
+
+                }
+            }
+            else if (btnUni.Text.Equals("Fortify"))
+            {
+                if (currentPlayer.GetStatus().Equals("choosing attacker") ||
+                currentPlayer.GetStatus().Equals("choosing defender") ||
+                currentPlayer.GetStatus().Equals("attacking") ||
+                currentPlayer.GetStatus().Equals("relocating troops"))
+                {
+                    if (currentPlayer.GetAttacker() != null)
+                        currentPlayer.GetAttacker().GetBtn().BackColor = currentPlayer.GetColor(); ////
+                    currentPlayer.SetAttacker(null);
+                    currentPlayer.SetDefender(null);
+                    currentPlayer.SetStatus("idle");
+
+                    btnUni.Text = "End Turn";
+
+                    currentPlayer.Fortify();
+                }
+                else  ///just a test
+                {
+                    tb.Text += "ERROR:" + currentPlayer.GetStatus() + Environment.NewLine;
+                }
+            }
+            else if (btnUni.Text.Equals("End Turn"))
+            {
+                if (currentPlayer.GetStatus().Equals("fortifying, picking source") ||
+                currentPlayer.GetStatus().Equals("fortifying, picking target") ||
+                currentPlayer.GetStatus().Equals("transferring"))
+                {
+                    currentPlayer.SetStatus("idle");
+                    if (currentPlayer.GetFortSource() != null)
+                        currentPlayer.GetFortSource().GetBtn().BackColor = currentPlayer.GetColor();
+                    if (currentPlayer.GetFortTarget() != null)
+                    {
+                        currentPlayer.GetFortTarget().GetBtn().BackColor = currentPlayer.GetColor();
+                        currentPlayer.GetFortTarget().GetBtn().ForeColor = Color.Black;
+                    }
+
+                    currentPlayer.SetFortSource(null);
+                    currentPlayer.SetFortTarget(null);
+
+                    btnUni.Text = "Drafting...";
+
+                    NextPlayer();
+
+                }
+                else   ///just a test
+                {
+                    tb.Text += "ERROR:" + currentPlayer.GetStatus() + Environment.NewLine;
+                }
+            }
         }
 
         //start button
@@ -86,7 +204,7 @@ namespace Risk
                 Player player2 = new Player("Billy", Color.Blue, tb);
                 Player player3 = new Player("Henry", Color.Green, tb);
                 players = new Player[] { player1, player2, player3 };
-                Game game = new Game(players);
+                Game game = new Game(players);      ///wut
 
                 currentPlayer = players[playerIndex];
                 currentPlayer.Pick();
@@ -101,6 +219,10 @@ namespace Risk
                 currentPlayer.GetStatus().Equals("attacking") ||
                 currentPlayer.GetStatus().Equals("relocating troops"))
             {
+                if (currentPlayer.GetAttacker() != null)
+                    currentPlayer.GetAttacker().GetBtn().BackColor = currentPlayer.GetColor(); ////
+                currentPlayer.SetAttacker(null);
+                currentPlayer.SetDefender(null);
                 currentPlayer.SetStatus("idle");
                 currentPlayer.Fortify();
             }
@@ -128,14 +250,7 @@ namespace Risk
                 currentPlayer.SetFortSource(null);
                 currentPlayer.SetFortTarget(null);
 
-                if (playerIndex < players.Length - 1)
-                    playerIndex++;
-                else
-                {
-                    playerIndex = 0;
-                }
-                currentPlayer = players[playerIndex];
-                currentPlayer.Draft();
+                NextPlayer();
 
             }
             else   ///just a test
@@ -189,6 +304,8 @@ namespace Risk
 
                         if (AllOwned())
                         {
+                            btnUni.Text = "Drafting...";
+
                             tb.Text += "Drafting phase." + Environment.NewLine;
                             playerIndex = 0;
                             currentPlayer = players[playerIndex];
@@ -217,6 +334,9 @@ namespace Risk
                         currentPlayer.SetStatus("idle");
 
                         tb.Text += "Attacking phase." + Environment.NewLine;
+
+                        ///
+                        btnUni.Text = "Fortify";
 
                         currentPlayer.AttackSelect();
                     }
@@ -247,6 +367,8 @@ namespace Risk
                     {
                         currentPlayer.SetDefender(terr);
                         currentPlayer.Attack();
+
+                        CheckForWinner();  ///////////////
                     }
                     else
                     {
@@ -334,14 +456,7 @@ namespace Risk
                         currentPlayer.GetFortSource().GetBtn().BackColor = currentPlayer.GetColor();
                         currentPlayer.GetFortTarget().GetBtn().BackColor = currentPlayer.GetColor();
                         currentPlayer.GetFortTarget().GetBtn().ForeColor = Color.Black;
-                        if (playerIndex < players.Length - 1)
-                            playerIndex++;
-                        else
-                        {
-                            playerIndex = 0;
-                        }
-                        currentPlayer = players[playerIndex];
-                        currentPlayer.Draft();
+                        NextPlayer();
                     }
                     else if (terr.Equals(currentPlayer.GetFortSource()) && currentPlayer.GetFortTarget().GetTroopNum() > 1)
                     {
