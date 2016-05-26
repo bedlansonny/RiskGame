@@ -22,11 +22,11 @@ namespace Risk
 
         //public Territory() { }
 
-        public Territory(int iDnum, Player owner, int[] neighbors)
+        public Territory(int iDnum, int[] neighbors)
         {
             this.btn = btns[iDnum];
             this.iDnum = iDnum;
-            this.owner = owner;
+            this.owner = null;
             this.neighbors = neighbors;
             this.troopNum = 0;
         }

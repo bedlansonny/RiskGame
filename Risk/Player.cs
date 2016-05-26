@@ -160,7 +160,7 @@ namespace Risk
             {
 
                 //move all troops but 1 from attacker to defender
-                Player temp = defender.GetOwner();////////////////////////////
+                Player temp = defender.GetOwner();
                 defender.GetOwner().RemoveTerr(defender);
                 defender.ChangeOwner(attacker.GetOwner());
                 defender.GetOwner().AddTerr(defender);

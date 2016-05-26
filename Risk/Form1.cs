@@ -4,15 +4,16 @@
  * 
  * Ctrl + F "///" to find Work in Progress
  * 
- * Future addtions:
- *      make the start, attack, fortify, and end turn buttons are the same button
+ * Future additions:
+ *          territory bonuses
  *      fortifying only if territories are connected
  *      card system
  *      ability to increase amount of troops moved in a click
             also add the ability to take back troops in drafting
  *      blinking when transferring troops after attacking
  *      skip fortifying step if all owned troops only have 1
- *      actually impliment the Game class somehow
+ *      actually impliment the Game class somehow (if neccessary?)
+ *      intro form that sets up characters, what happens after winning, etc.
  * 
  */
 using System;
@@ -90,6 +91,9 @@ namespace Risk
             currentPlayer = players[playerIndex];
             if (currentPlayer.GetIsDead())
                 NextPlayer();
+
+            btnUni.BackColor = currentPlayer.GetColor();
+
             currentPlayer.Draft();
         }
 
@@ -100,29 +104,88 @@ namespace Risk
 
         private void btnUni_Click(object sender, EventArgs e)
         {
-            if (btnUni.Text.Equals("Start Game"))
+            if (btnUni.Text.Equals("Start Game"))       ///////////////Change with implimentation of new map
             {
                 if (!started)
                 {
                     started = true;
                     tb.Text += "Starting the game..." + Environment.NewLine;
 
-                    btns = new Button[] { btn0, btn1, btn2, btn3, btn4, btn5 };     //needs to change based on amt of terr btns
+                    btns = new Button[]
+                    {
+                        button0, button1, button2, button3, button4, button5, button6, button7, button8, button9, button10, 
+                        button11, button12, button13, button14, button15, button16, button17, button18, button19, button20, 
+                        button21, button22, button23, button24, button25, button26, button27, button28, button29, button30, 
+                        button31, button32, button33, button34, button35, button36, button37, button38, button39, button40, button41
+                    };
                     Territory.btns = btns;
 
-                    Territory brah = new Territory(0, null, new int[] { 1 });
-                    Territory bruh = new Territory(1, null, new int[] { 0, 2, 4 });
-                    Territory bro = new Territory(2, null, new int[] { 1, 3, 4 });
-                    Territory broski = new Territory(3, null, new int[] { 2, 4, 5 });
-                    Territory bruda = new Territory(4, null, new int[] { 1, 2, 5 });
-                    Territory bretheren = new Territory(5, null, new int[] { 3, 4 });
-                    territories = new Territory[] { brah, bruh, bro, broski, bruda, bretheren };
+                    /*
+                    Territory brah = new Territory(0, new int[] { 1 });
+                    Territory bruh = new Territory(1, new int[] { 0, 2, 4 });
+                    Territory bro = new Territory(2, new int[] { 1, 3, 4 });
+                    Territory broski = new Territory(3, new int[] { 2, 4, 5 });
+                    Territory bruda = new Territory(4, new int[] { 1, 2, 5 });
+                    Territory bretheren = new Territory(5, new int[] { 3, 4 });
+                     */
+
+                    // Territory t = new Territory(, new int[] {})
+                    Territory t0 = new Territory(0, new int[] { 40, 41 });
+                    Territory t1 = new Territory(1, new int[] { 2, 4, 30 });
+                    Territory t2 = new Territory(2, new int[] { 1, 3, 4, 5 });
+                    Territory t3 = new Territory(3, new int[] { 2, 5, 6, 20 });
+                    Territory t4 = new Territory(4, new int[] { 1, 2, 5, 7 });
+                    Territory t5 = new Territory(5, new int[] { 2, 3, 4, 6, 7, 8 });
+                    Territory t6 = new Territory(6, new int[] { 3, 5, 8 });
+                    Territory t7 = new Territory(7, new int[] { 4, 5, 8, 9 });
+                    Territory t8 = new Territory(8, new int[] { 5, 6, 7, 9 });
+                    Territory t9 = new Territory(9, new int[] { 7, 8, 10 });
+                    Territory t10 = new Territory(10, new int[] { 9, 11, 12 });
+                    Territory t11 = new Territory(11, new int[] { 10, 12, 13 });
+                    Territory t12 = new Territory(12, new int[] { 10, 11, 13, 14 });
+                    Territory t13 = new Territory(13, new int[] { 11, 12 });
+                    Territory t14 = new Territory(14, new int[] { 12, 15, 16, 17, 25, 26 });
+                    Territory t15 = new Territory(15, new int[] { 14, 17, 26, 36 });
+                    Territory t16 = new Territory(16, new int[] { 14, 17, 18 });
+                    Territory t17 = new Territory(17, new int[] { 14, 15, 16, 18, 19, 36 });
+                    Territory t18 = new Territory(18, new int[] { 16, 17, 19 });
+                    Territory t19 = new Territory(19, new int[] { 17, 18 });
+                    Territory t20 = new Territory(20, new int[] { 3, 21, 23 });
+                    Territory t21 = new Territory(21, new int[] { 20, 22, 23, 24 });
+                    Territory t22 = new Territory(22, new int[] { 21, 24, 26, 27, 34, 36 });
+                    Territory t23 = new Territory(23, new int[] { 20, 21, 24, 25 });
+                    Territory t24 = new Territory(24, new int[] { 21, 22, 23, 25, 26 });
+                    Territory t25 = new Territory(25, new int[] { 14, 23, 24, 26 });
+                    Territory t26 = new Territory(26, new int[] { 14, 15, 22, 24, 25, 36 });
+                    Territory t27 = new Territory(27, new int[] { 22, 28, 34, 35 });
+                    Territory t28 = new Territory(28, new int[] { 27, 29, 31, 33, 35 });
+                    Territory t29 = new Territory(29, new int[] { 28, 30, 31 });
+                    Territory t30 = new Territory(30, new int[] { 1, 29, 31, 32, 33 });
+                    Territory t31 = new Territory(31, new int[] { 28, 29, 30, 33 });
+                    Territory t32 = new Territory(32, new int[] { 30, 33 });
+                    Territory t33 = new Territory(33, new int[] { 28, 30, 31, 32, 35 });
+                    Territory t34 = new Territory(34, new int[] { 22, 27, 35, 36, 37 });
+                    Territory t35 = new Territory(35, new int[] { 27, 28, 33, 34, 37, 38 });
+                    Territory t36 = new Territory(36, new int[] { 15, 17, 22, 26, 34, 37 });
+                    Territory t37 = new Territory(37, new int[] { 34, 35, 36, 38 });
+                    Territory t38 = new Territory(38, new int[] { 35, 37, 39 });
+                    Territory t39 = new Territory(39, new int[] { 38, 40, 41 });
+                    Territory t40 = new Territory(40, new int[] { 0, 39, 41 });
+                    Territory t41 = new Territory(41, new int[] { 0, 39, 40 });
+
+
+                    territories = new Territory[]
+                    {
+                        t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12,
+                        t13, t14, t15, t16, t17, t18, t19, t20, t21, t22, t23,
+                        t24, t25, t26, t27, t28, t29, t30, t31, t32, t33, t34,
+                        t35, t36, t37, t38, t39, t40, t41
+                    };
 
                     Player player1 = new Player("Parker", Color.Red, tb);
                     Player player2 = new Player("Billy", Color.Blue, tb);
                     Player player3 = new Player("Henry", Color.Green, tb);
                     players = new Player[] { player1, player2, player3 };
-                    Game game = new Game(players);      ///wut
 
                     currentPlayer = players[playerIndex];
                     currentPlayer.Pick();
@@ -137,7 +200,7 @@ namespace Risk
                 currentPlayer.GetStatus().Equals("relocating troops"))
                 {
                     if (currentPlayer.GetAttacker() != null)
-                        currentPlayer.GetAttacker().GetBtn().BackColor = currentPlayer.GetColor(); ////
+                        currentPlayer.GetAttacker().GetBtn().BackColor = currentPlayer.GetColor();
                     currentPlayer.SetAttacker(null);
                     currentPlayer.SetDefender(null);
                     currentPlayer.SetStatus("idle");
@@ -146,7 +209,7 @@ namespace Risk
 
                     currentPlayer.Fortify();
                 }
-                else  ///just a test
+                else
                 {
                     tb.Text += "ERROR:" + currentPlayer.GetStatus() + Environment.NewLine;
                 }
@@ -181,110 +244,11 @@ namespace Risk
             }
         }
 
-        //start button
-        private void btnStart_Click(object sender, EventArgs e)
-        {
-            if(!started)
-            {
-                started = true;
-                tb.Text += "Starting the game..." + Environment.NewLine;
-
-                btns = new Button[] { btn0, btn1, btn2, btn3, btn4, btn5 };     //needs to change based on amt of terr btns
-                Territory.btns = btns;
-
-                Territory brah = new Territory(0, null, new int[] { 1 });
-                Territory bruh = new Territory(1, null, new int[] { 0, 2, 4 });
-                Territory bro = new Territory(2, null, new int[] { 1, 3, 4 });
-                Territory broski = new Territory(3, null, new int[] { 2, 4, 5 });
-                Territory bruda = new Territory(4, null, new int[] { 1, 2, 5 });
-                Territory bretheren = new Territory(5, null, new int[] { 3, 4 });
-                territories = new Territory[] { brah, bruh, bro, broski, bruda, bretheren };
-
-                Player player1 = new Player("Parker", Color.Red, tb);
-                Player player2 = new Player("Billy", Color.Blue, tb);
-                Player player3 = new Player("Henry", Color.Green, tb);
-                players = new Player[] { player1, player2, player3 };
-                Game game = new Game(players);      ///wut
-
-                currentPlayer = players[playerIndex];
-                currentPlayer.Pick();
-
-            }
-        }
-
-        private void btnStopAttacking_Click(object sender, EventArgs e)
-        {
-            if (currentPlayer.GetStatus().Equals("choosing attacker") ||
-                currentPlayer.GetStatus().Equals("choosing defender") ||
-                currentPlayer.GetStatus().Equals("attacking") ||
-                currentPlayer.GetStatus().Equals("relocating troops"))
-            {
-                if (currentPlayer.GetAttacker() != null)
-                    currentPlayer.GetAttacker().GetBtn().BackColor = currentPlayer.GetColor(); ////
-                currentPlayer.SetAttacker(null);
-                currentPlayer.SetDefender(null);
-                currentPlayer.SetStatus("idle");
-                currentPlayer.Fortify();
-            }
-            else  ///just a test
-            {
-                tb.Text += "ERROR:" + currentPlayer.GetStatus() + Environment.NewLine;
-            }
-        }
-
-        private void btnEndTurn_Click(object sender, EventArgs e)
-        {
-            if (currentPlayer.GetStatus().Equals("fortifying, picking source") ||
-                currentPlayer.GetStatus().Equals("fortifying, picking target") ||
-                currentPlayer.GetStatus().Equals("transferring"))
-            {
-                currentPlayer.SetStatus("idle");
-                if (currentPlayer.GetFortSource() != null)
-                    currentPlayer.GetFortSource().GetBtn().BackColor = currentPlayer.GetColor();
-                if (currentPlayer.GetFortTarget() != null)
-                {
-                    currentPlayer.GetFortTarget().GetBtn().BackColor = currentPlayer.GetColor();
-                    currentPlayer.GetFortTarget().GetBtn().ForeColor = Color.Black;
-                }
-
-                currentPlayer.SetFortSource(null);
-                currentPlayer.SetFortTarget(null);
-
-                NextPlayer();
-
-            }
-            else   ///just a test
-            {
-                tb.Text += "ERROR:" + currentPlayer.GetStatus() + Environment.NewLine;
-            }
-        }
-
-        private void btnTest_Click(object sender, EventArgs e)
-        {
-            started = true;
-
-            btns = new Button[] { btnTest0, btnTest1 };
-            Territory.btns = btns;
-
-            Player p1 = new Player("Joe", Color.DarkViolet, tb);
-            Player p2 = new Player("Bob", Color.DarkTurquoise, tb);
-            players = new Player[] { p1, p2 };
-;
-            Territory test0 = new Territory(0, null, new int[] { 1 });
-            Territory test1 = new Territory(1, null, new int[] { 0 });
-            territories = new Territory[] { test0, test1 };
-
-            currentPlayer = players[playerIndex];
-            currentPlayer.Pick();
-
-
-        }
-
         //clicked on territory
         public void DoButtonStuff(int btnNum)
         {
 
-            tb.Text += currentPlayer.GetName() + ": " + currentPlayer.GetStatus() + Environment.NewLine;     ///just a test
+            tb.Text += currentPlayer.GetName() + ": " + currentPlayer.GetStatus() + Environment.NewLine;
 
             if(started)
             {
@@ -309,6 +273,7 @@ namespace Risk
                             tb.Text += "Drafting phase." + Environment.NewLine;
                             playerIndex = 0;
                             currentPlayer = players[playerIndex];
+                            btnUni.BackColor = currentPlayer.GetColor();
                             currentPlayer.Draft();
                         }
                         else
@@ -368,7 +333,7 @@ namespace Risk
                         currentPlayer.SetDefender(terr);
                         currentPlayer.Attack();
 
-                        CheckForWinner();  ///////////////
+                        CheckForWinner();
                     }
                     else
                     {
@@ -378,7 +343,7 @@ namespace Risk
                         currentPlayer.SetStatus("choosing attacker");
                     }
                 }
-                else if (currentPlayer.GetStatus().Equals("relocating troops")) ///will be tested later**************
+                else if (currentPlayer.GetStatus().Equals("relocating troops"))
                 {
                     if (!terr.Equals(currentPlayer.GetAttacker()) && !terr.Equals(currentPlayer.GetDefender()))
                     {
@@ -386,9 +351,9 @@ namespace Risk
                     }
                     else if (terr.Equals(currentPlayer.GetDefender()))
                     {
-                        if (currentPlayer.GetAttacker().GetTroopNum() == 1) ////needs to jump to turning white and whatnot
+                        if (currentPlayer.GetAttacker().GetTroopNum() == 1)
                         {
-                            tb.Text += "potato" + Environment.NewLine;    ///experimental
+                            tb.Text += "potato" + Environment.NewLine;
                             currentPlayer.AttackSelect();
                             currentPlayer.SetAttacker(terr);
                             currentPlayer.SetStatus("choosing defender");
@@ -448,7 +413,7 @@ namespace Risk
                         currentPlayer.SetStatus("fortifying, picking source");
                     }
                 }
-                else if (currentPlayer.GetStatus().Equals("transferring"))  ///
+                else if (currentPlayer.GetStatus().Equals("transferring"))
                 {
                     if (!terr.Equals(currentPlayer.GetFortSource()) && !terr.Equals(currentPlayer.GetFortTarget()))
                     {
@@ -489,47 +454,249 @@ namespace Risk
 
 
 
-
-        private void btnTest0_Click(object sender, EventArgs e)
-        {
-            DoButtonStuff(0);
-        }
-
-        private void btnTest1_Click(object sender, EventArgs e)
-        {
-            DoButtonStuff(1);
-        }
-
         //btn event handlers, not important
-        private void btn0_Click(object sender, EventArgs e)
+        private void testBtn0_Click(object sender, EventArgs e)
         {
             DoButtonStuff(0);
         }
 
-        private void btn1_Click(object sender, EventArgs e)
+        private void testBtn1_Click(object sender, EventArgs e)
         {
             DoButtonStuff(1);
         }
 
-        private void btn2_Click(object sender, EventArgs e)
+        private void testBtn2_Click(object sender, EventArgs e)
         {
             DoButtonStuff(2);
         }
 
-        private void btn3_Click(object sender, EventArgs e)
+        private void testBtn3_Click(object sender, EventArgs e)
         {
             DoButtonStuff(3);
         }
 
-        private void btn4_Click(object sender, EventArgs e)
+        private void testBtn4_Click(object sender, EventArgs e)
         {
             DoButtonStuff(4);
         }
 
-        private void btn5_Click(object sender, EventArgs e)
+        private void testBtn5_Click(object sender, EventArgs e)
         {
             DoButtonStuff(5);
         }
+
+        private void button0_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(0);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(1);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(2);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(3);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(4);
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(5);
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(6);
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(7);
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(8);
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(9);
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(10);
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(11);
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(12);
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(13);
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(14);
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(15);
+        }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(16);
+        }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(17);
+        }
+
+        private void button18_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(18);
+        }
+
+        private void button19_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(19);
+        }
+
+        private void button20_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(20);
+        }
+
+        private void button21_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(21);
+        }
+
+        private void button22_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(22);
+        }
+
+        private void button23_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(23);
+        }
+
+        private void button24_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(24);
+        }
+
+        private void button25_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(25);
+        }
+
+        private void button26_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(26);
+        }
+
+        private void button27_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(27);
+        }
+
+        private void button28_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(28);
+        }
+
+        private void button29_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(29);
+        }
+
+        private void button30_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(30);
+        }
+
+        private void button31_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(31);
+        }
+
+        private void button32_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(32);
+        }
+
+        private void button33_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(33);
+
+        }
+
+        private void button34_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(34);
+        }
+
+        private void button35_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(35);
+        }
+
+        private void button36_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(36);
+        }
+
+        private void button37_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(37);
+        }
+
+        private void button38_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(38);
+        }
+
+        private void button39_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(39);
+        }
+
+        private void button40_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(40);
+        }
+
+        private void button41_Click(object sender, EventArgs e)
+        {
+            DoButtonStuff(41);
+        }
+
+
 
     }
 
