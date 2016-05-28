@@ -119,7 +119,7 @@
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(206, 254);
+            this.textBox1.Size = new System.Drawing.Size(21, 14);
             this.textBox1.TabIndex = 4;
             // 
             // testBtn4
@@ -154,7 +154,7 @@
             // 
             // btnUni
             // 
-            this.btnUni.Location = new System.Drawing.Point(12, 320);
+            this.btnUni.Location = new System.Drawing.Point(64, 145);
             this.btnUni.Name = "btnUni";
             this.btnUni.Size = new System.Drawing.Size(126, 48);
             this.btnUni.TabIndex = 15;

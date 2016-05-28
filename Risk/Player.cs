@@ -49,6 +49,27 @@ namespace Risk
             if (draftTroopNum < 3)
                 draftTroopNum = 3;
 
+            int[] iDarr = new int[ownedTerrs.Count];
+            Territory[] ownedTerrArr = (Territory[]) ownedTerrs.ToArray(typeof(Territory));
+            for (int i = 0; i < ownedTerrs.Count; i++)
+            {
+                iDarr[i] = ownedTerrArr[i].GetiDNum();
+            }
+
+            ////call bools of territories to add bonuses
+            if (ownsNorthAmerica(iDarr))
+                draftTroopNum += 5;
+            if (ownsSouthAmerica(iDarr))
+                draftTroopNum += 2;
+            if (ownsEurope(iDarr))
+                draftTroopNum += 5;
+            if (ownsAfrica(iDarr))
+                draftTroopNum += 3;
+            if (ownsAsia(iDarr))
+                draftTroopNum += 7;
+            if (ownsAustralia(iDarr))
+                draftTroopNum += 2;
+
             status = "drafting";
             tb.Text += name + " is drafting his troops." + Environment.NewLine;
 
@@ -225,6 +246,70 @@ namespace Risk
         public void RemoveTerr(Territory remTerr)
         {
             ownedTerrs.Remove(remTerr);
+        }
+
+        public bool ownsNorthAmerica(int[] iDarr)   ///
+        {
+            for(int i = 1; i <=9; i++)
+            {
+                if (!iDarr.Contains(i))
+                    return false;
+            }
+            return true;
+        }
+
+        public bool ownsSouthAmerica(int[] iDarr)
+        {
+            for (int i = 10; i <= 13; i++)
+            {
+                if (!iDarr.Contains(i))
+                    return false;
+            }
+            return true;
+        }
+
+        public bool ownsEurope(int[] iDarr)
+        {
+            for (int i = 20; i <= 26; i++)
+            {
+                if (!iDarr.Contains(i))
+                    return false;
+            }
+            return true;
+        }
+
+        public bool ownsAfrica(int[] iDarr)
+        {
+            for (int i = 14; i <= 19; i++)
+            {
+                if (!iDarr.Contains(i))
+                    return false;
+            }
+            return true;
+        }
+
+        public bool ownsAsia(int[] iDarr)
+        {
+            for (int i = 27; i <= 38; i++)
+            {
+                if (!iDarr.Contains(i))
+                    return false;
+            }
+            return true;
+        }
+
+        public bool ownsAustralia(int[] iDarr)
+        {
+            for (int i = 39; i <= 41; i++)
+            {
+                if (!iDarr.Contains(i))
+                    return false;
+            }
+
+            if (!iDarr.Contains(0))
+                return false;
+
+            return true;
         }
 
         public int GetTroopTotal()

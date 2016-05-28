@@ -5,16 +5,19 @@
  * Ctrl + F "///" to find Work in Progress
  * 
  * Future additions:
- *          territory bonuses
- *      fortifying only if territories are connected
+ *      Make "Picking.." message, changing color based on whose turn it is.
+        Also, say how many troops are to be put down when drafting
  *      card system
+ *      intro form that sets up characters, what happens after winning, etc.
+ *          option for random picking of territories at the beginning
  *      ability to increase amount of troops moved in a click
             also add the ability to take back troops in drafting
  *      blinking when transferring troops after attacking
  *      skip fortifying step if all owned troops only have 1
- *      actually impliment the Game class somehow (if neccessary?)
- *      intro form that sets up characters, what happens after winning, etc.
- * 
+ *      make dice probability rather than actual dice based
+ *      Skip fortifying when impossible
+ *      Have Communist symbol, swatstika, flag selection
+ *          Soundtrack everytime a territory is taken over or not, based on flag
  */
 using System;
 using System.Collections.Generic;
@@ -183,9 +186,10 @@ namespace Risk
                     };
 
                     Player player1 = new Player("Parker", Color.Red, tb);
-                    Player player2 = new Player("Billy", Color.Blue, tb);
-                    Player player3 = new Player("Henry", Color.Green, tb);
-                    players = new Player[] { player1, player2, player3 };
+                    Player player2 = new Player("Miles", Color.Yellow, tb);
+                    Player player3 = new Player("Logan", Color.Green, tb);
+                    Player player4 = new Player("Nick", Color.Blue, tb);
+                    players = new Player[] { player1, player2, player3, player4 };
 
                     currentPlayer = players[playerIndex];
                     currentPlayer.Pick();
@@ -702,11 +706,22 @@ namespace Risk
 
     public class Game
     {
-        public static Player[] players;
-
-        public Game(Player[] players2)
+        /*
+        public static int[] nAmerTerrs;
+        public static int[] sAmerTerrs;
+        public static int[] euroTerrs;
+        public static int[] africaTerrs;    //14...19
+        public static int[] asiaTerrs;  //27...38
+        public static int[] austTerrs;  //39,40,41,0
+        
+        public Game()
         {
-            players = players2;
+            nAmerTerrs = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+            sAmerTerrs = new int[] { 10, 11, 12, 13 };
+            euroTerrs = new int[] { 20, 21, 22, 23, 24, 25, 26 };
+
         }
-    }
+         */
+     }
+
 }
