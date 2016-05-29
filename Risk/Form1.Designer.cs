@@ -29,13 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.testBtn0 = new System.Windows.Forms.Button();
-            this.testBtn1 = new System.Windows.Forms.Button();
-            this.testBtn2 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.testBtn4 = new System.Windows.Forms.Button();
-            this.testBtn5 = new System.Windows.Forms.Button();
-            this.testBtn3 = new System.Windows.Forms.Button();
             this.btnUni = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button1 = new System.Windows.Forms.Button();
@@ -80,77 +73,9 @@
             this.button40 = new System.Windows.Forms.Button();
             this.button41 = new System.Windows.Forms.Button();
             this.button0 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // testBtn0
-            // 
-            this.testBtn0.Location = new System.Drawing.Point(24, 391);
-            this.testBtn0.Name = "testBtn0";
-            this.testBtn0.Size = new System.Drawing.Size(44, 46);
-            this.testBtn0.TabIndex = 0;
-            this.testBtn0.Text = "BRAH";
-            this.testBtn0.UseVisualStyleBackColor = true;
-            this.testBtn0.Click += new System.EventHandler(this.testBtn0_Click);
-            // 
-            // testBtn1
-            // 
-            this.testBtn1.Location = new System.Drawing.Point(74, 391);
-            this.testBtn1.Name = "testBtn1";
-            this.testBtn1.Size = new System.Drawing.Size(44, 46);
-            this.testBtn1.TabIndex = 1;
-            this.testBtn1.Text = "BRUH";
-            this.testBtn1.UseVisualStyleBackColor = true;
-            this.testBtn1.Click += new System.EventHandler(this.testBtn1_Click);
-            // 
-            // testBtn2
-            // 
-            this.testBtn2.Location = new System.Drawing.Point(124, 391);
-            this.testBtn2.Name = "testBtn2";
-            this.testBtn2.Size = new System.Drawing.Size(44, 46);
-            this.testBtn2.TabIndex = 3;
-            this.testBtn2.Text = "BRO";
-            this.testBtn2.UseVisualStyleBackColor = true;
-            this.testBtn2.Click += new System.EventHandler(this.testBtn2_Click);
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(12, 12);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(21, 14);
-            this.textBox1.TabIndex = 4;
-            // 
-            // testBtn4
-            // 
-            this.testBtn4.Location = new System.Drawing.Point(146, 443);
-            this.testBtn4.Name = "testBtn4";
-            this.testBtn4.Size = new System.Drawing.Size(44, 46);
-            this.testBtn4.TabIndex = 5;
-            this.testBtn4.Text = "BRUDA";
-            this.testBtn4.UseVisualStyleBackColor = true;
-            this.testBtn4.Click += new System.EventHandler(this.testBtn4_Click);
-            // 
-            // testBtn5
-            // 
-            this.testBtn5.Location = new System.Drawing.Point(196, 422);
-            this.testBtn5.Name = "testBtn5";
-            this.testBtn5.Size = new System.Drawing.Size(44, 46);
-            this.testBtn5.TabIndex = 6;
-            this.testBtn5.Text = "BRETHEREN";
-            this.testBtn5.UseVisualStyleBackColor = true;
-            this.testBtn5.Click += new System.EventHandler(this.testBtn5_Click);
-            // 
-            // testBtn3
-            // 
-            this.testBtn3.Location = new System.Drawing.Point(174, 370);
-            this.testBtn3.Name = "testBtn3";
-            this.testBtn3.Size = new System.Drawing.Size(44, 46);
-            this.testBtn3.TabIndex = 7;
-            this.testBtn3.Text = "BROSKI";
-            this.testBtn3.UseVisualStyleBackColor = true;
-            this.testBtn3.Click += new System.EventHandler(this.testBtn3_Click);
             // 
             // btnUni
             // 
@@ -591,11 +516,19 @@
             this.button0.UseVisualStyleBackColor = true;
             this.button0.Click += new System.EventHandler(this.button0_Click);
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(97, 207);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(63, 20);
+            this.textBox1.TabIndex = 59;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1249, 625);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button0);
             this.Controls.Add(this.button41);
             this.Controls.Add(this.button40);
@@ -640,13 +573,6 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.btnUni);
-            this.Controls.Add(this.testBtn3);
-            this.Controls.Add(this.testBtn5);
-            this.Controls.Add(this.testBtn4);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.testBtn2);
-            this.Controls.Add(this.testBtn1);
-            this.Controls.Add(this.testBtn0);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -658,13 +584,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Button testBtn0;
-        private System.Windows.Forms.Button testBtn1;
-        private System.Windows.Forms.Button testBtn2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button testBtn4;
-        private System.Windows.Forms.Button testBtn5;
-        private System.Windows.Forms.Button testBtn3;
         private System.Windows.Forms.Button btnUni;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button button1;
@@ -709,6 +628,7 @@
         private System.Windows.Forms.Button button40;
         private System.Windows.Forms.Button button41;
         private System.Windows.Forms.Button button0;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 

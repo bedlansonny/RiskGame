@@ -16,7 +16,6 @@ namespace Risk
         private int draftTroopNum;
         private String status;
         Color color;
-        private TextBox tb;
         private Territory attacker;
         private Territory defender;
         int attackedWith;
@@ -24,22 +23,27 @@ namespace Risk
         private Territory fortTarget;
         private bool isDead;
 
+        static TextBox tb;
+
         public Player() { }
 
-        public Player(String name, Color color, TextBox tb)
+        public Player(String name, Color color)
         {
             this.name = name;
             this.color = color;
             this.ownedTerrs = new ArrayList();
             this.status = "idle";
-            this.tb = tb;
             this.isDead = false;
+        }
+
+        public static void SetTextBox(TextBox tb2)
+        {
+            tb = tb2;
         }
 
         public void Pick()
         {
             status = "picking";
-            tb.Text += name + " is picking a territory." + Environment.NewLine;
         }
 
         public void Draft()
@@ -70,24 +74,102 @@ namespace Risk
             if (ownsAustralia(iDarr))
                 draftTroopNum += 2;
 
+            tb.Text = "" + draftTroopNum;
+
             status = "drafting";
-            tb.Text += name + " is drafting his troops." + Environment.NewLine;
 
         }
 
         public void AttackSelect()
         {
             SetStatus("choosing attacker");
-            tb.Text += name + " is now attacking." + Environment.NewLine;
         }
 
-        public void Attack()    ///gonna be extremely difficult equations, lots of mapping out, testing, etc.
+        public void Attack()            ///may be a little sketchy, just removed die class
         {
             status = "attacking";
-            tb.Text += name + "'s Terr " + attacker.GetiDNum() + " is attacking " + defender.GetOwner().GetName() + "'s Terr " + defender.GetiDNum() + "." + Environment.NewLine;
 
+            int attackerDice = 0;
+            int defenderDice = 0;
+            Random rnd = new Random();
+
+            //while loop
+
+
+
+
+            
             while(attacker.GetTroopNum() > 1 && defender.GetTroopNum() > 0)
             {
+                if (attacker.GetTroopNum() == 2)
+                    attackerDice = 1;
+                else if (attacker.GetTroopNum() == 3)
+                    attackerDice = 2;
+                else if (attacker.GetTroopNum() >= 4)
+                    attackerDice = 3;
+
+                if (defender.GetTroopNum() == 1)
+                    defenderDice = 1;
+                else if (defender.GetTroopNum() >= 2)
+                    defenderDice = 2;
+
+                if (attackerDice == 1 && defenderDice == 1)
+                {
+                    if (rnd.Next(1, 101) <= 42)
+                        defender.SubtractTroops(1);
+                    else
+                        attacker.SubtractTroops(1);
+                }
+                else if (attackerDice == 2 && defenderDice == 1)
+                {
+                    if (rnd.Next(1, 101) <= 42)
+                        attacker.SubtractTroops(1);
+                    else
+                        defender.SubtractTroops(1);
+                }
+                else if (attackerDice == 3 && defenderDice == 1)
+                {
+                    if (rnd.Next(1, 101) <= 66)
+                        defender.SubtractTroops(1);
+                    else
+                        attacker.SubtractTroops(1);
+                }
+                else if (attackerDice == 1 && defenderDice == 2)
+                {
+                    if (rnd.Next(1, 5) == 1)
+                        defender.SubtractTroops(1);
+                    else
+                        attacker.SubtractTroops(1);
+                }
+                else if (attackerDice == 2 && defenderDice == 2)
+                {
+                    int randNum = rnd.Next(1, 101);
+
+                    if (randNum <= 23)
+                        defender.SubtractTroops(2);
+                    else if (randNum <= 68)
+                        attacker.SubtractTroops(2);
+                    else
+                    {
+                        attacker.SubtractTroops(1);
+                        defender.SubtractTroops(1);
+                    }
+                }
+                else if (attackerDice == 3 && defenderDice == 2)
+                {
+                    int randNum = rnd.Next(1, 101);
+
+                    if (randNum <= 37)
+                        defender.SubtractTroops(2);
+                    else if (randNum <= 66)
+                        attacker.SubtractTroops(2);
+                    else
+                    {
+                        attacker.SubtractTroops(1);
+                        defender.SubtractTroops(1);
+                    }
+                }
+                /*
                 if (attacker.GetTroopNum() == 2)
                     attacker.SetDiceNum(1);
                 else if (attacker.GetTroopNum() == 3)
@@ -144,18 +226,6 @@ namespace Risk
                 } while (!sorted);
 
 
-                ///This is a test
-                foreach (Die die in attacker.GetDice())
-                    tb.Text += die + ", ";
-
-                tb.Text += Environment.NewLine;
-
-                foreach (Die die in defender.GetDice())
-                    tb.Text += die + ", ";
-
-                tb.Text += Environment.NewLine;
-
-
 
                 //compare values alongside each arr until one arr get to the end, taking off troops accordingly
                 int maxLength;
@@ -172,6 +242,7 @@ namespace Risk
                     else
                         attacker.SubtractTroops(1);
                 }
+                */
 
             }
 
@@ -187,21 +258,15 @@ namespace Risk
                 defender.GetOwner().AddTerr(defender);
                 defender.GetBtn().BackColor = attacker.GetOwner().GetColor();
 
-                tb.Text += "a: " + attacker.GetTroopNum() + Environment.NewLine + "d: " + defender.GetTroopNum() + Environment.NewLine;///test stuff
                 int transferAmt = attacker.GetTroopNum() - 1;
                 attacker.SubtractTroops(transferAmt);
                 defender.AddTroops(transferAmt);
-                tb.Text += "a: " + attacker.GetTroopNum() + Environment.NewLine + "d: " + defender.GetTroopNum() + Environment.NewLine;///test stuff
-                                                                                                                                       ///
+
                 if (temp.ownedTerrs.Count == 0)
                     temp.SetIsDead(true);
 
-
-                RelocateTroops();       ///may be glitchy still
-
-                //set attacker and defender dice to null
-                attacker.SetDiceNum(0);
-                defender.SetDiceNum(0);
+                attackedWith = attackerDice;
+                RelocateTroops();
 
             }
             else
@@ -209,9 +274,7 @@ namespace Risk
                 AttackSelect();
             }
 
-
-
-            //To be put after finishing relocating troops:  AttackSelect();
+             
         }
 
         //let player move troops back to attacker as a option
@@ -219,13 +282,11 @@ namespace Risk
         public void RelocateTroops()        ///It'd make it more convenient if they blinked while this happened
         {
             status = "relocating troops";
-            attackedWith = attacker.GetDice().Length;
         }
 
-        public void Fortify()   ///After I finish attack
+        public void Fortify()
         {
             status = "fortifying, picking source";
-            tb.Text += name + " is now fortifying." + Environment.NewLine;
         }
 
         public void Transfer()
@@ -236,6 +297,7 @@ namespace Risk
         public void TakeDraftTroop(int amt)
         {
             draftTroopNum -= amt;
+            tb.Text = "" + draftTroopNum;
         }
 
         public void AddTerr(Territory newTerr)

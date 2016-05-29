@@ -5,11 +5,11 @@
  * Ctrl + F "///" to find Work in Progress
  * 
  * Future additions:
- *      Make "Picking.." message, changing color based on whose turn it is.
-        Also, say how many troops are to be put down when drafting
+ *      Also, say how many troops are to be put down when drafting
  *      card system
  *      intro form that sets up characters, what happens after winning, etc.
  *          option for random picking of territories at the beginning
+ *      after initial picking, more troops need to be included to add onto owned troops (look at risk rules online)
  *      ability to increase amount of troops moved in a click
             also add the ability to take back troops in drafting
  *      blinking when transferring troops after attacking
@@ -46,8 +46,9 @@ namespace Risk
         Player[] players;
         Player currentPlayer;
         int playerIndex;
-        TextBox tb;
         bool started;
+
+        TextBox tb;
 
         Button[] btns;
 
@@ -58,8 +59,9 @@ namespace Risk
             players = new Player[0];
             currentPlayer = new Player();
             playerIndex = 0;
-            tb = textBox1;
             started = false;
+            tb = textBox1;
+            Player.SetTextBox(tb);
 
 
         }
@@ -83,7 +85,7 @@ namespace Risk
 
         }
 
-        public void NextPlayer()    ///
+        public void NextPlayer()
         {
             if (playerIndex < players.Length - 1)
                 playerIndex++;
@@ -100,19 +102,13 @@ namespace Risk
             currentPlayer.Draft();
         }
 
-        private void btnClear_Click(object sender, EventArgs e) ////experimental
-        {
-            tb.Text = "";
-        }
-
         private void btnUni_Click(object sender, EventArgs e)
         {
-            if (btnUni.Text.Equals("Start Game"))       ///////////////Change with implimentation of new map
+            if (btnUni.Text.Equals("Start Game"))
             {
                 if (!started)
                 {
                     started = true;
-                    tb.Text += "Starting the game..." + Environment.NewLine;
 
                     btns = new Button[]
                     {
@@ -185,13 +181,13 @@ namespace Risk
                         t35, t36, t37, t38, t39, t40, t41
                     };
 
-                    Player player1 = new Player("Parker", Color.Red, tb);
-                    Player player2 = new Player("Miles", Color.Yellow, tb);
-                    Player player3 = new Player("Logan", Color.Green, tb);
-                    Player player4 = new Player("Nick", Color.Blue, tb);
-                    players = new Player[] { player1, player2, player3, player4 };
+                    Player player1 = new Player("Nick", Color.Green);
+                    Player player2 = new Player("Parker", Color.Red);
+                    players = new Player[] { player1, player2 };
 
                     currentPlayer = players[playerIndex];
+                    btnUni.Text = "Picking...";
+                    btnUni.BackColor = currentPlayer.GetColor();
                     currentPlayer.Pick();
 
                 }
@@ -212,10 +208,6 @@ namespace Risk
                     btnUni.Text = "End Turn";
 
                     currentPlayer.Fortify();
-                }
-                else
-                {
-                    tb.Text += "ERROR:" + currentPlayer.GetStatus() + Environment.NewLine;
                 }
             }
             else if (btnUni.Text.Equals("End Turn"))
@@ -241,18 +233,12 @@ namespace Risk
                     NextPlayer();
 
                 }
-                else   ///just a test
-                {
-                    tb.Text += "ERROR:" + currentPlayer.GetStatus() + Environment.NewLine;
-                }
             }
         }
 
         //clicked on territory
         public void DoButtonStuff(int btnNum)
         {
-
-            tb.Text += currentPlayer.GetName() + ": " + currentPlayer.GetStatus() + Environment.NewLine;
 
             if(started)
             {
@@ -274,7 +260,6 @@ namespace Risk
                         {
                             btnUni.Text = "Drafting...";
 
-                            tb.Text += "Drafting phase." + Environment.NewLine;
                             playerIndex = 0;
                             currentPlayer = players[playerIndex];
                             btnUni.BackColor = currentPlayer.GetColor();
@@ -288,6 +273,7 @@ namespace Risk
                                 playerIndex = 0;
 
                             currentPlayer = players[playerIndex];
+                            btnUni.BackColor = currentPlayer.GetColor();
                             currentPlayer.Pick();
                         }
                     }
@@ -302,9 +288,6 @@ namespace Risk
                     {
                         currentPlayer.SetStatus("idle");
 
-                        tb.Text += "Attacking phase." + Environment.NewLine;
-
-                        ///
                         btnUni.Text = "Fortify";
 
                         currentPlayer.AttackSelect();
@@ -315,8 +298,8 @@ namespace Risk
                           terr.GetOwner().Equals(currentPlayer))
                 {
                     if (terr.GetTroopNum() < 2)
-                        tb.Text += "Insufficient troops to attack from there." + Environment.NewLine;
-                    else if(terr.Equals(currentPlayer.GetAttacker()))
+                        MessageBox.Show("Insufficient troops to attack from there.");
+                    else if (terr.Equals(currentPlayer.GetAttacker()))
                     {
 
                         currentPlayer.GetAttacker().GetBtn().BackColor = currentPlayer.GetColor();
@@ -357,7 +340,6 @@ namespace Risk
                     {
                         if (currentPlayer.GetAttacker().GetTroopNum() == 1)
                         {
-                            tb.Text += "potato" + Environment.NewLine;
                             currentPlayer.AttackSelect();
                             currentPlayer.SetAttacker(terr);
                             currentPlayer.SetStatus("choosing defender");
@@ -459,35 +441,6 @@ namespace Risk
 
 
         //btn event handlers, not important
-        private void testBtn0_Click(object sender, EventArgs e)
-        {
-            DoButtonStuff(0);
-        }
-
-        private void testBtn1_Click(object sender, EventArgs e)
-        {
-            DoButtonStuff(1);
-        }
-
-        private void testBtn2_Click(object sender, EventArgs e)
-        {
-            DoButtonStuff(2);
-        }
-
-        private void testBtn3_Click(object sender, EventArgs e)
-        {
-            DoButtonStuff(3);
-        }
-
-        private void testBtn4_Click(object sender, EventArgs e)
-        {
-            DoButtonStuff(4);
-        }
-
-        private void testBtn5_Click(object sender, EventArgs e)
-        {
-            DoButtonStuff(5);
-        }
 
         private void button0_Click(object sender, EventArgs e)
         {

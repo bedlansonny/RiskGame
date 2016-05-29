@@ -18,8 +18,6 @@ namespace Risk
 
         public static Button[] btns;    //not traditional, experimental to shorten constructor parameters
 
-        Die[] dice;
-
         //public Territory() { }
 
         public Territory(int iDnum, int[] neighbors)
@@ -58,17 +56,9 @@ namespace Risk
             return neighbors.Contains(otherTerr.GetiDNum());
         }
 
-        public void SetDiceNum(int diceNum)
-        {
-            dice = new Die[diceNum];
-            for (int i = 0; i < dice.Length; i++)
-                dice[i] = new Die();
-        }
-
         public Player GetOwner() { return owner; }
         public int GetTroopNum() { return troopNum; }
         public int GetiDNum() { return iDnum; }
         public Button GetBtn() { return btn; }
-        public Die[] GetDice() { return dice; }
     }
 }
